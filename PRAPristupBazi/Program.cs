@@ -23,7 +23,11 @@ Console.WriteLine("Hello, World!");
 Console.WriteLine();
 
 
-// Scaffold-DbContext 'Server=DESKTOP-GS9MV53; Database=PRAKnjizara; Trusted_Connection=True; MultipleActiveResultSets=True' Microsoft.EntityFrameworkCore.SqlServer -Context KnjizaraContext -ContextDir DAL -OutputDir Models -Force
+// Database reverse engineer script:
+// Scaffold-DbContext '[DATABASE_CONNECTION_STRING]' Microsoft.EntityFrameworkCore.SqlServer -Context KnjizaraContext -ContextDir DAL -OutputDir Models -Force
+
+// Suggested connection string:
+// Server=[MACHINE_NAME]; Database=PRAKnjizara; Trusted_Connection=True; MultipleActiveResultSets=True
 
 
 // ENTITYFRAMEWORK PACKAGES:
