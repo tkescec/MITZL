@@ -18,7 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Controllers\BaseController.cs~RF1c9d060.TMP" />
     <None Remove="Views\Shared\Front\Account.cshtml~RFcaf92e.TMP" />
+    <None Remove="Views\_ViewStart.cshtml~RF15a6ca1.TMP" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,10 +28,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Shared\Admin\" />
-    <Folder Include="wwwroot\admin\css\" />
     <Folder Include="wwwroot\admin\js\" />
-    <Folder Include="wwwroot\front\js\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.5" />
   </ItemGroup>
 
 </Project>
