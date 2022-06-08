@@ -7,7 +7,29 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\admin\lib\**" />
+    <Compile Remove="wwwroot\front\lib\**" />
+    <Content Remove="wwwroot\admin\lib\**" />
+    <Content Remove="wwwroot\front\lib\**" />
+    <EmbeddedResource Remove="wwwroot\admin\lib\**" />
+    <EmbeddedResource Remove="wwwroot\front\lib\**" />
+    <None Remove="wwwroot\admin\lib\**" />
+    <None Remove="wwwroot\front\lib\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Views\Shared\Front\Account.cshtml~RFcaf92e.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\PRAPristupBazi\PRAPristupBazi.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\Shared\Admin\" />
+    <Folder Include="wwwroot\admin\css\" />
+    <Folder Include="wwwroot\admin\js\" />
+    <Folder Include="wwwroot\front\js\" />
   </ItemGroup>
 
 </Project>
