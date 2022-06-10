@@ -1,0 +1,17 @@
+﻿@*TODO - Provjeriti da li je korisnik prijavljen i prikazati logout*@
+
+@if (false)
+{
+    <a href="javascript:;">
+        <img src="../assets/img/user/user-1.jpg" class="user-img" alt="" />
+        <span class="d-none d-xl-inline">Tomislav</span>
+    </a>
+}
+else
+{
+    <div class="account">
+        <a asp-controller="Account" asp-action="Login">Login</a>
+        /
+        <a asp-controller="Account" asp-action="Register">Register</a>
+    </div>
+}

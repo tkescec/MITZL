@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Head partial - Contains base level CSS and SEO meta tags -->
+    <partial name="Admin/_Head" />
+    <!-- Page Specific CSS -->
+    @await RenderSectionAsync("Styles", required: false)
+
+</head>
+<body>
+    <!-- BEGIN #loader -->
+    <partial name="Admin/_Loader" />
+    <!-- END #loader -->
+
+    <!-- BEGIN #app -->
+    <div id="app" class="app app-header-fixed app-sidebar-fixed  app-with-wide-sidebar">
+        <!-- BEGIN #header -->
+        <partial name="Admin/_Header" />
+        <!-- END #header -->
+
+        <!-- BEGIN #sidebar -->
+        <partial name="Admin/_Sidebar" />
+        <!-- END #sidebar -->
+
+        <!-- BEGIN #content -->
+        <div id="content" class="app-content">
+            @RenderBody()
+        </div>
+		<!-- END #content -->
+
+        <!-- BEGIN theme-panel -->
+        <partial name="Admin/_SidePanel" />
+	    <!-- END theme-panel -->
+
+        <!-- BEGIN scroll-top-btn -->
+		<a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top" data-toggle="scroll-to-top"><i class="fa fa-angle-up"></i></a>
+		<!-- END scroll-top-btn -->
+    </div>
+    <!-- END #app -->
+
+    <!-- ================== BEGIN core-js ================== -->
+    <script src="~/admin/js/vendor.min.js" asp-append-version="true"></script>
+    <script src="~/admin/js/app.min.js" asp-append-version="true"></script>
+    <!-- ================== END core-js ================== -->
+
+    <!-- ================== BEGIN page-js ================== -->  
+    <script src="~/lib/gritter/js/jquery.gritter.min.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+    <!-- ================== BEGIN page-js ================== -->
+
+</body>
+</html>

@@ -1,0 +1,63 @@
+﻿@model LoginViewModel
+@{
+    ViewBag.Title = "Prijava korisnika";
+    Layout = "~/Views/Shared/Layouts/_AccountLayout.cshtml";
+}
+
+<!-- BEGIN login -->
+<div class="login login-v1">
+    <!-- BEGIN login-container -->
+    <div class="login-container">
+        <!-- BEGIN login-header -->
+        <div class="login-header">
+            <div class="brand">
+                <div class="d-flex align-items-center">
+                    <span class="logo"></span> <b>Super</b> Knjižara
+                </div>
+                <small>Internet trgovina knjiga</small>
+            </div>
+            <div class="icon">
+                <i class="fa fa-lock"></i>
+            </div>
+            <div>@ViewBag.Message</div>
+            <div>@TempData["Message"]</div>
+        </div>
+        <!-- END login-header -->
+        <!-- BEGIN login-body -->
+        <div class="login-body">
+            <!-- BEGIN login-content -->
+            <div class="login-content fs-13px">
+                <form asp-controller="Account" asp-action="Login" asp-route-returnurl="/AdminBooks" method="post">
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-floating mb-20px">
+                        <input type="email" asp-for="Email" class="form-control fs-13px h-45px" />
+                        <label asp-for="Email" class="d-flex align-items-center py-0"></label>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-20px">
+                        <input type="password" asp-for="Password" class="form-control fs-13px h-45px" />
+                        <label asp-for="Password" class="d-flex align-items-center py-0"></label>
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-check mb-20px">
+                        <input class="form-check-input" type="checkbox" asp-for="RememberMe" />
+                        <label class="form-check-label" asp-for="RememberMe"></label>
+                    </div>
+                    <div class="login-buttons">
+                        <button type="submit" class="btn h-45px btn-cyan d-block w-100 btn-lg">Prijavi me</button>
+                    </div>
+                </form>
+            </div>
+            <!-- END login-content -->
+        </div>
+        <!-- END login-body -->
+    </div>
+    <!-- END login-container -->
+</div>
+<!-- END login -->
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+}

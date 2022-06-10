@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Head partial - Contains base level CSS and SEO meta tags -->
+    <partial name="Front/_Head" />
+    <!-- Page Specific CSS -->
+    @await RenderSectionAsync("Styles", required: false)
+
+</head>
+<body>
+    <!-- BEGIN #page-container -->
+	<div id="page-container" class="fade show">
+        <!-- BEGIN #header -->
+        <partial name="Front/_Header" />
+        <!-- END #header -->
+
+        @RenderBody()
+
+         <!-- BEGIN #footer -->
+        <partial name="Front/_Footer" />
+        <!-- END #footer -->
+    </div>
+	<!-- END #page-container -->
+
+    <!-- BEGIN theme-panel -->
+    <partial name="Front/_SidePanel" />
+	<!-- END theme-panel -->
+
+
+    <!-- ================== BEGIN core-js ================== -->
+    <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
+    <!-- ================== END core-js ================== -->
+
+    <!-- ================== BEGIN page-js ================== -->
+    <script src="~/front/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+    <!-- ================== BEGIN page-js ================== -->
+
+</body>
+</html>

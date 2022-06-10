@@ -1,0 +1,13 @@
+﻿
+.header .header-nav .nav > li > .account {
+    line-height: 56px;
+    padding: 10px 16px;
+    text-decoration: none;
+    display: block;
+    position: relative;
+    font-size: 14px;
+}
+
+.header .header-nav .nav > li > .account > a {
+    color: var(--app-component-color);
+}
