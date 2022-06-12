@@ -19,7 +19,7 @@ namespace Knjižara.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public IActionResult Login(LoginViewModel model, string returnUrl = "/AdminBooks")
+        public IActionResult Login(LoginViewModel model, string returnUrl = "/Admin/Books")
         {
             if (!ModelState.IsValid)
             {

@@ -19,7 +19,6 @@
 
   <ItemGroup>
     <None Remove="Controllers\BaseController.cs~RF1c9d060.TMP" />
-    <None Remove="Views\Shared\Front\Account.cshtml~RFcaf92e.TMP" />
     <None Remove="Views\_ViewStart.cshtml~RF15a6ca1.TMP" />
   </ItemGroup>
 
@@ -28,10 +27,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Admin\Data\" />
     <Folder Include="wwwroot\admin\js\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.5" />
   </ItemGroup>
 

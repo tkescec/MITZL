@@ -1,7 +1,7 @@
 ﻿@model LoginViewModel
 @{
     ViewBag.Title = "Prijava korisnika";
-    Layout = "~/Views/Shared/Layouts/_AccountLayout.cshtml";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
 
 <!-- BEGIN login -->
@@ -27,7 +27,7 @@
         <div class="login-body">
             <!-- BEGIN login-content -->
             <div class="login-content fs-13px">
-                <form asp-controller="Account" asp-action="Login" asp-route-returnurl="/AdminBooks" method="post">
+                <form asp-controller="Account" asp-action="Login" asp-route-returnurl="/Admin/Books" method="post">
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <div class="form-floating mb-20px">

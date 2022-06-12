@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Knjižara.Controllers.Admin
+namespace Knjižara.Areas.Admin.Controllers
 {
-    public class AdminBooksController : AdminBaseController
+    public class BooksController : BaseController
     {
         [HttpGet]
         public IActionResult Index()

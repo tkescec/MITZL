@@ -1,16 +1,3 @@
 ﻿@{
-    string? CurrentReq = Convert.ToString(Context.Request.HttpContext.Request.RouteValues["Controller"]);
-
-    if (CurrentReq != null)
-    {
-        if (CurrentReq.StartsWith("Admin"))
-        {
-            Layout = "~/Views/Shared/Layouts/_AdminLayout.cshtml";
-        }
-        else
-        {
-            Layout = "~/Views/Shared/Layouts/_Layout.cshtml";
-        }
-    }
-
+    Layout = "_Layout";
 }
