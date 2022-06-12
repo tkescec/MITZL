@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 
-namespace Knjižara
+namespace Knjižara.Middlewares
 {
     // You may need to install the Microsoft.AspNetCore.Http.Abstractions package into your project
     public class Authenticate
@@ -16,6 +16,13 @@ namespace Knjižara
 
         public Task Invoke(HttpContext httpContext)
         {
+            if (httpContext.Request.Path.StartsWithSegments("/Admin"))
+            {
+                if (httpContext.Session.GetString("_UserRole") == null)
+                {
+                    httpContext.Response.Redirect("/Account/Login");
+                }
+            }
 
             return _next(httpContext);
         }

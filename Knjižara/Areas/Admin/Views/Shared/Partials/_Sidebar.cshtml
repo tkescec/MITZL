@@ -1,45 +1,27 @@
-﻿<div id="sidebar" class="app-sidebar" data-disable-slide-animation="true">
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accessor
+
+<div id="sidebar" class="app-sidebar" data-disable-slide-animation="true">
     <!-- BEGIN scrollbar -->
     <div class="app-sidebar-content" data-scrollbar="true" data-height="100%">
         <!-- BEGIN menu -->
         <div class="menu">
             <div class="menu-profile">
-                <a href="javascript:;" class="menu-profile-link" data-toggle="app-sidebar-profile" data-target="#appSidebarProfileMenu">
+                <a href="javascript:;" class="menu-profile-link">
                     <div class="menu-profile-cover with-shadow"></div>
                     <div class="menu-profile-image">
-                        <img src="../assets/img/user/user-14.jpg" alt="" />
+                        <img src="~/front/img/user/user-1.jpg" class="user-img" alt="" />
                     </div>
                     <div class="menu-profile-info">
                         <div class="d-flex align-items-center">
                             <div class="flex-grow-1">
-                                John Smith
+                                @Accessor.HttpContext.Session.GetString("_UserName")
                             </div>
                             <div class="menu-caret ms-auto"></div>
                         </div>
-                        <small>Front end developer</small>
+                        <small>Administrator</small>
                     </div>
                 </a>
-            </div>
-            <div id="appSidebarProfileMenu" class="collapse">
-                <div class="menu-item pt-5px">
-                    <a href="javascript:;" class="menu-link">
-                        <div class="menu-icon"><i class="fa fa-cog"></i></div>
-                        <div class="menu-text">Settings</div>
-                    </a>
-                </div>
-                <div class="menu-item">
-                    <a href="javascript:;" class="menu-link">
-                        <div class="menu-icon"><i class="fa fa-pencil-alt"></i></div>
-                        <div class="menu-text"> Send Feedback</div>
-                    </a>
-                </div>
-                <div class="menu-item pb-5px">
-                    <a href="javascript:;" class="menu-link">
-                        <div class="menu-icon"><i class="fa fa-question-circle"></i></div>
-                        <div class="menu-text"> Helps</div>
-                    </a>
-                </div>
-                <div class="menu-divider m-0"></div>
             </div>
             <div class="menu-header">Navigation</div>
             <div class="menu-item has-sub active">

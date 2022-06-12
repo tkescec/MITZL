@@ -1,15 +1,20 @@
+using Knjižara.Middlewares;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-//builder.Services.AddRazorPages()
-//    .AddMvcOptions(options =>
-//    {
-//        options.MaxModelValidationErrors = 50;
-//        options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(
-//            _ => "The field is required.");
-//    });
+builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 
 var app = builder.Build();
 
@@ -22,8 +27,14 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthorization();
+app.UseSession();
 
+// Middlewares
+app.UseGuest();
+app.UseAuthenticate();
+app.UseUserHasAccess();
+
+// Routes
 app.MapControllerRoute(
     name: "areas",
     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");

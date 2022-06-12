@@ -1,10 +1,11 @@
-﻿@*TODO - Provjeriti da li je korisnik prijavljen i prikazati logout*@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accessor
 
-@if (false)
+@if (!string.IsNullOrEmpty(@Accessor.HttpContext.Session.GetString("_UserName")))
 {
     <a href="javascript:;">
-        <img src="../assets/img/user/user-1.jpg" class="user-img" alt="" />
-        <span class="d-none d-xl-inline">Tomislav</span>
+        <img src="~/front/img/user/user-1.jpg" class="user-img" alt="" />
+        <span class="d-none d-xl-inline">@Accessor.HttpContext.Session.GetString("_UserName")</span>
     </a>
 }
 else
