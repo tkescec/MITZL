@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <!-- Head partial - Contains base level CSS and SEO meta tags -->
-    <partial name="Front/_Head" />
+    <partial name="Partials/_Head" />
     <!-- Page Specific CSS -->
     @await RenderSectionAsync("Styles", required: false)
 
@@ -11,19 +11,19 @@
     <!-- BEGIN #page-container -->
 	<div id="page-container" class="fade show">
         <!-- BEGIN #header -->
-        <partial name="Front/_Header" />
+        <partial name="Partials/_Header" />
         <!-- END #header -->
 
         @RenderBody()
 
          <!-- BEGIN #footer -->
-        <partial name="Front/_Footer" />
+        <partial name="Partials/_Footer" />
         <!-- END #footer -->
     </div>
 	<!-- END #page-container -->
 
     <!-- BEGIN theme-panel -->
-    <partial name="Front/_SidePanel" />
+    <partial name="Partials/_SidePanel" />
 	<!-- END theme-panel -->
 
 

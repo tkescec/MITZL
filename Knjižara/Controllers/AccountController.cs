@@ -1,25 +1,21 @@
 ﻿using Knjižara.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PRAPristupBazi.DAL.DatabaseAccess.EntityAccess.KorisnikAccess;
 using PRAPristupBazi.Models;
 
 namespace Knjižara.Controllers
 {
-    [Authorize]
     public class AccountController : BaseController
     {
         [HttpGet]
-        [AllowAnonymous]
         public IActionResult Login()
         {
             return View();
         }
 
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public IActionResult Login(LoginViewModel model, string returnUrl = "/AdminBooks")
+        public IActionResult Login(LoginViewModel model, string returnUrl)
         {
             if (!ModelState.IsValid)
             {
@@ -30,17 +26,35 @@ namespace Knjižara.Controllers
             {
                 Korisnik user = KorisnikAccess.AutentificirajKorisnika(Db, model.Email, model.Password);
 
-                return RedirectToLocal(returnUrl);
+                returnUrl = user.UlogaUaplikacijiId switch
+                {
+                    1 => "/",
+                    _ => "/Admin/Books",
+                };
+
+                if (user.Aktiviran != null && user.DatumBrisanja == null)
+                {
+                    string userName = user.Osoba?.Ime?.ToString() + " " + user.Osoba?.Prezime?.ToString();
+
+                    HttpContext.Session.SetInt32("_UserId", user.Idkorisnik);
+                    HttpContext.Session.SetInt32("_UserRole", user.UlogaUaplikaciji.IdulogaUaplikaciji);
+                    HttpContext.Session.SetString("_UserName", userName);
+
+                    return RedirectToLocal(returnUrl);
+                }                
+
+                ModelState.AddModelError("", "Korisnički račun nije aktivan!");
+
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                ModelState.AddModelError("", "Neispravna email adresa i/ili lozinka");
+                ModelState.AddModelError("", "Neispravna email adresa i/ili lozinka!");
             }
 
             return View(model);
         }
 
-        [AllowAnonymous]
+        [HttpGet]
         public IActionResult Register()
         {
             return View();

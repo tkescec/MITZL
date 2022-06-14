@@ -1,0 +1,43 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accessor
+
+<div id="header" class="app-header">
+    <!-- BEGIN navbar-header -->
+    <div class="navbar-header">
+        <button type="button" class="navbar-desktop-toggler" data-toggle="app-sidebar-minify">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <button type="button" class="navbar-mobile-toggler" data-toggle="app-sidebar-mobile">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a href="index.html" class="navbar-brand">
+            Super Knjižara Administracija
+        </a>
+    </div>
+    <!-- END navbar-header -->
+    <!-- BEGIN header-nav -->
+    <div class="navbar-nav">
+        <div class="navbar-item navbar-user dropdown">
+            <a href="#" class="navbar-link dropdown-toggle d-flex" data-bs-toggle="dropdown">
+                <span class="d-none d-md-inline">
+                    @Accessor.HttpContext.Session.GetString("_UserName")
+                </span>
+                 <img src="~/front/img/user/user-1.jpg" class="user-img" alt="" />
+            </a>
+            <div class="dropdown-menu dropdown-menu-end me-1">
+                <a href="javascript:;" class="dropdown-item">Log Out</a>
+            </div>
+        </div>
+    </div>
+    <!-- END header navigation right -->
+
+    <div class="navbar-floating-form">
+        <button class="search-btn" type="submit"><i class="material-icons">search</i></button>
+        <input type="text" class="form-control" placeholder="Search Something..." />
+        <a href="#" class="close" data-dismiss="app-header-floating-form"><i class="material-icons">close</i></a>
+    </div>
+</div>
