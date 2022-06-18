@@ -1,6 +1,6 @@
-using Knjiûara.Mailer;
-using Knjiûara.Mailer.Models;
-using Knjiûara.Middlewares;
+using Knji≈æara.Mailer;
+using Knji≈æara.Mailer.Models;
+using Knji≈æara.Middlewares;
 using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -39,6 +39,7 @@ app.UseSession();
 
 // Middlewares
 app.UseGuest();
+app.UseAuthenticate();
 app.UseUserHasAccess();
 
 // Routes
