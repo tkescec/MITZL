@@ -1,4 +1,7 @@
+using Knjižara.Mailer;
+using Knjižara.Mailer.Models;
 using Knjižara.Middlewares;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +11,11 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDistributedMemoryCache();
 
 builder.Services.AddHttpContextAccessor();
+
+builder.Services.Configure<MailSettings>(new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("MailSettings"));
+
+builder.Services.AddTransient<IEmailService, EmailService>();
+
 
 builder.Services.AddSession(options =>
 {
@@ -31,7 +39,6 @@ app.UseSession();
 
 // Middlewares
 app.UseGuest();
-app.UseAuthenticate();
 app.UseUserHasAccess();
 
 // Routes
