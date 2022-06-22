@@ -89,7 +89,7 @@ namespace PRAPristupBazi.DAL.DatabaseAccess.EntityAccess.KorisnikAccess
         /***************************************************************************************************************************************************************/
         // CREATE
 
-        public static void DodajKorisnika(this KnjizaraContext db, Korisnik korisnik)
+        public static string DodajKorisnika(this KnjizaraContext db, Korisnik korisnik)
         {
             var postojeci = db.Osobas.QuerryMultiple(x => x.Email == korisnik.Osoba.Email);
             if (postojeci.Count() != 0)
@@ -132,7 +132,9 @@ namespace PRAPristupBazi.DAL.DatabaseAccess.EntityAccess.KorisnikAccess
             finally
             {
                 korisnikCreateLock = false;
+
             }
+            return korisnik.SifraKorisnika;
         }
 
         /***************************************************************************************************************************************************************/

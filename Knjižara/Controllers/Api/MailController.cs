@@ -19,7 +19,7 @@ namespace Knjižara.Controllers
         {
             try
             {
-                await mailService.SendEmailAsync(request);
+                await mailService.SendEmailAsync(request, "Registration");
                 return Ok();
             }
             catch (Exception ex)
@@ -28,5 +28,7 @@ namespace Knjižara.Controllers
             }
 
         }
+
+       
     }
 }
