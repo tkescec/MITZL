@@ -85,10 +85,10 @@ namespace Knjižara.Controllers
             };
             try
             {
-               string korisnikAppID = KorisnikAccess.DodajKorisnika(Db, korisnik);
+                KorisnikAccess.DodajKorisnika(Db, korisnik);
                 MailRequest request = new MailRequest { ToEmail = korisnik.Osoba.Email };
                 // kontroler treba tek implementirat
-                string magicLink = $"{Request.Scheme}://{Request.Host}/api/login/verify?SifraKorisnika={korisnik.SifraKorisnika}";
+                string magicLink = $"{Request.Scheme}://{Request.Host}/login/verify?SifraKorisnika={korisnik.SifraKorisnika}";
                 await mailService.SendMagicLink(request, magicLink);
                 
 
