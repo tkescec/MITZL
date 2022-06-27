@@ -81,6 +81,12 @@ namespace PRAPristupBazi.DAL.DatabaseAccess.EntityAccess.KorisnikAccess
             return db.Korisniks.QuerrySingle(x => x.Idkorisnik == idkorisnik);
         }
 
+        public static Korisnik DohvatiKorisnikaPoSifri(this KnjizaraContext db, string sifra)
+        {
+            return  db.Korisniks.Where(x => x.SifraKorisnika == sifra).FirstOrDefault();
+           
+        }
+
         public static Korisnik AutentificirajKorisnika(this KnjizaraContext db, string email, string lozinka)
         {
             return db.Korisniks.QuerrySingle(x => x.Lozinka == lozinka.HashirajLozinku() && x.Osoba.Email == email);
@@ -132,6 +138,7 @@ namespace PRAPristupBazi.DAL.DatabaseAccess.EntityAccess.KorisnikAccess
             finally
             {
                 korisnikCreateLock = false;
+
             }
         }
 
