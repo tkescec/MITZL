@@ -1,0 +1,117 @@
+﻿@model SettingsViewModel
+@{
+    ViewBag.Title = "Postavke";
+}
+
+<!-- BEGIN page-header -->
+<h1 class="page-header mb-3">Postavke</h1>
+<!-- END page-header -->
+<!-- BEGIN row -->
+<div class="row">
+    <!-- BEGIN col-6 -->
+    <div class="col-12">
+        <!-- BEGIN panel -->
+        <div class="panel panel-inverse" data-sortable-id="settings">
+            <!-- BEGIN panel-heading -->
+            <div class="panel-heading">
+                <h4 class="panel-title">Ažuriranje postavki knjižare</h4>
+                <div class="panel-heading-btn">
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-danger" data-toggle="panel-remove"><i class="fa fa-times"></i></a>
+                </div>
+            </div>
+            <!-- END panel-heading -->
+            <!-- BEGIN panel-body -->
+            <div class="panel-body">
+                <form asp-area="Admin" asp-controller="Account" asp-action="Settings" asp-route-returnurl="/Admin/Account/Settings" method="post" data-parsley-validate="true">
+                    <input type="hidden" asp-for="Idknjizara" value="@Model.Idknjizara" />
+                    <fieldset>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-20px">
+                                    <label class="form-label" asp-for="Naziv">Naziv</label>
+                                    <input class="form-control" type="text" asp-for="Naziv" placeholder="Upišite naziv knižare" />
+                                    <span asp-validation-for="Naziv" class="text-danger"></span>
+                                </div>
+                                <div class="mb-20px">
+                                    <label class="form-label" asp-for="Adresa">Adresa sjedišta</label>
+                                    <input class="form-control" type="text" asp-for="Adresa" placeholder="Upišite adresu sjedišta knjižare" />
+                                    <span asp-validation-for="Adresa" class="text-danger"></span>
+                                </div>
+                                <div class="mb-20px">
+                                    <label class="form-label" asp-for="Oib">OIB</label>
+                                    <input class="form-control" type="number" asp-for="Oib" placeholder="Upišite OIB knjižare" />
+                                    <span asp-validation-for="Oib" class="text-danger"></span>
+                                </div>
+                                <div class="mb-20px">
+                                    <label class="form-label" asp-for="Iban">IBAN</label>
+                                    <div class="input-group">
+                                        <div class="input-group-text">HR</div>
+                                        <input class="form-control" type="number" asp-for="Iban" placeholder="Upišite IBAN knjižare" />
+                                    </div>
+                                    <span asp-validation-for="Iban" class="text-danger"></span>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6">
+                                 <div class="mb-20px">
+                                    <label class="form-label" for="LogoInput">Logo</label>
+                                    <input class="form-control" type="file" id="LogoInput" />
+                                    <input type="hidden" asp-for="Logo" value="@Model.Logo" />
+                                </div>
+                                <div class="mb-20px">
+                                    <div id="LogoPreview">
+                                        <img src="@Model.Logo" class="img-fluid img-thumbnail rounded" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100px mt-30px">Ažuriraj</button>
+                    </fieldset>
+                </form>
+                
+            </div>
+            <!-- END panel-body -->
+        </div>
+        <!-- END panel -->
+    </div>
+    <!-- END col-6 -->
+</div>
+<!-- END row -->
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/localization/messages_hr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+
+    <script>
+        
+        $(document).ready(function() {
+            $.images.preview({
+                input_field: "#LogoInput",
+                input_base: "#Logo",
+                preview_box: "#LogoPreview img"
+            });
+        });
+        
+    </script>
+
+    @if(Model.Success){
+        <script>
+            $.gritter.add({
+                title: 'Ažuriranje postavki',
+                text: 'Uspješno ste ažurirali postavke knjižare',
+                sticky: false,
+                time: 5000,
+                //class_name: 'gritter-light',
+                before_open: function() { },
+                after_open: function(e) { },
+                before_close: function(manual_close) { },
+                after_close: function(manual_close) { }
+            });
+        </script>
+    }
+    
+}
