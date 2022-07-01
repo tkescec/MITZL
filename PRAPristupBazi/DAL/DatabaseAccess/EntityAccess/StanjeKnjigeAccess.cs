@@ -17,6 +17,11 @@ namespace PRAPristupBazi.DAL.DatabaseAccess.EntityAccess.StanjeKnjigeAccess
             return db.StanjeKnjiges.QuerryMultiple(x => x.Stanje == stanje).FirstOrDefault();
         }
 
+        public static IEnumerable<StanjeKnjige> DohvatiStanjaKnjige(this KnjizaraContext db)
+        {
+            return db.StanjeKnjiges.ToList();
+        }
+
         /***************************************************************************************************************************************************************/
         // CREATE
 

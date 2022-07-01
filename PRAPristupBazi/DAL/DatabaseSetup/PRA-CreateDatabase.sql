@@ -61,7 +61,7 @@ create table Knjiga
 	Naslov nvarchar(100),
 	Izdanje nvarchar(100),
 	KratakSadrzaj nvarchar(max),
-	Slika nvarchar(100),
+	Slika nvarchar(max),
 	DostupnaKolicina int,
 	CijenaZaKupovinu money,
 	CijenaZaNajam money,

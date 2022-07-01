@@ -23,6 +23,11 @@ namespace Knjižara.Areas.Admin.Controllers
                 ViewBag.Error = TempData["Error"];
                 TempData["Error"] = null;
             }
+            if (TempData["Success"] != null)
+            {
+                ViewBag.Success = TempData["Success"];
+                TempData["Success"] = null;
+            }
         }
 
         internal IActionResult RedirectToLocal(string returnUrl)
