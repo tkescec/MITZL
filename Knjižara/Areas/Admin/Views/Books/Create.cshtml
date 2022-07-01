@@ -1,0 +1,177 @@
+﻿@model CreateBookViewModel
+@{
+    ViewBag.Title = "Dodavanje nove knjige";
+}
+
+<!-- BEGIN page-header -->
+<h1 class="page-header mb-3">Nova knjiga</h1>
+<!-- END page-header -->
+<!-- BEGIN row -->
+<div class="row">
+    <!-- BEGIN col-6 -->
+    <div class="col-12">
+
+        <partial name="Partials/_Alert" />
+
+        <!-- BEGIN panel -->
+        <div class="panel panel-inverse" data-sortable-id="settings">
+            <!-- BEGIN panel-heading -->
+            <div class="panel-heading">
+                <h4 class="panel-title">Dodavanje nove knjige</h4>
+                <div class="panel-heading-btn">
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-danger" data-toggle="panel-remove"><i class="fa fa-times"></i></a>
+                </div>
+            </div>
+            <!-- END panel-heading -->
+            <!-- BEGIN panel-body -->
+            <div class="panel-body">
+                <form asp-area="Admin" asp-controller="Books" asp-action="Create" asp-route-returnurl="/Admin/Books/Create" method="post" data-parsley-validate="true">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <fieldset>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-30px">
+                                    <label class="form-label" asp-for="Naslov">Naslov</label>
+                                    <input class="form-control" type="text" asp-for="Naslov" placeholder="Upišite naslov knjige" />
+                                    <span asp-validation-for="Naslov" class="text-danger"></span>
+                                </div>
+                                <div class="mb-30px">
+                                    <label class="form-label" asp-for="AutorId">Autor</label>
+                                    <select class="form-select" asp-for="AutorId">
+                                        <option value="">Odaberi autora</option>
+                                        @if (Model.Autori.Any())
+                                        {
+                                            foreach (var autor in Model.Autori)
+                                            {
+                                                <option value="@autor.Idautor">@autor.ToString()</option>
+                                            }
+                                        }
+                                    </select>
+                                    <span asp-validation-for="AutorId" class="text-danger"></span>
+                                </div>
+
+                                <div class="mb-30px">
+                                    <label class="form-label" asp-for="IzdavacId">Izdavač</label>
+                                    <select class="form-select" asp-for="IzdavacId">
+                                        <option value="">Odaberi izdavača</option>
+                                        @if (Model.Izdavaci.Any())
+                                        {
+                                            foreach (var izdavac in Model.Izdavaci)
+                                            {
+                                                <option value="@izdavac.Idizdavac">@izdavac.Naziv</option>
+                                            }
+                                        }
+                                    </select>
+                                    <span asp-validation-for="IzdavacId" class="text-danger"></span>
+                                </div>
+                                <div class="mb-30px">
+                                    <label class="form-label" asp-for="DostupnaKolicina">Stanje</label>
+                                    <input class="form-control" type="number" asp-for="DostupnaKolicina" placeholder="Upišite koliko ima knjiga na stanju" />
+                                    <span asp-validation-for="DostupnaKolicina" class="text-danger"></span>
+                                </div>
+                                <div class="mb-30px">
+                                    <label class="form-label" asp-for="CijenaZaKupovinu">Cijena za kupovinu</label>
+                                    <div class="input-group">
+                                        <div class="input-group-text">KN</div>
+                                        <input class="form-control" type="number" asp-for="CijenaZaKupovinu" placeholder="Upišite prodajnu cijenu knjige" />
+                                        <div class="input-group-text">.00</div>
+                                    </div>
+                                    <span asp-validation-for="CijenaZaKupovinu" class="text-danger"></span>
+                                </div>
+                                <div class="mb-30px">
+                                    <label class="form-label" asp-for="CijenaZaNajam">Cijena za najam</label>
+                                    <div class="input-group">
+                                        <div class="input-group-text">KN</div>
+                                        <input class="form-control" type="number" asp-for="CijenaZaNajam" placeholder="Upišite cijenu najma za knjigu po danu" />
+                                        <div class="input-group-text">.00</div>
+                                    </div>
+                                    <span asp-validation-for="CijenaZaNajam" class="text-danger"></span>
+                                </div>
+
+                                <div class="mb-30px">
+                                    @if (Model.StanjaKnjige.Any())
+                                    {
+                                        foreach (var stanjeKnjige in Model.StanjaKnjige)
+                                        {
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" id="@stanjeKnjige.Stanje" type="radio" asp-for="StanjeKnjigeId" value="@stanjeKnjige.IdstanjeKnjige" checked>
+                                                <label class="form-check-label" for="@stanjeKnjige.Stanje">@stanjeKnjige.Stanje</label>
+                                            </div>
+                                        }
+                                    }
+                                    <div class="input-group">
+                                        <span asp-validation-for="StanjeKnjige" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-30px">
+                                    <label class="form-label" asp-for="KratakSadrzaj">Kratki sadržaj</label>
+                                    <textarea class="form-control" asp-for="KratakSadrzaj" rows="5"></textarea>
+                                    <span asp-validation-for="KratakSadrzaj" class="text-danger"></span>
+                                </div>
+
+                                <div class="mb-20px">
+                                    <label class="form-label" for="SlikaInput">Slika</label>
+                                    <input class="form-control" type="file" id="SlikaInput" />
+                                    <input type="hidden" asp-for="Slika" value="@Utils.IMG_PLACEHOLDER" />
+                                </div>
+                                <div class="mb-20px">
+                                    <div id="ImgPreview">
+                                        <img src="@Utils.IMG_PLACEHOLDER" class="img-fluid img-thumbnail rounded" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100px mt-30px">Dodaj</button>
+                    </fieldset>
+                </form>
+
+            </div>
+            <!-- END panel-body -->
+        </div>
+        <!-- END panel -->
+    </div>
+    <!-- END col-6 -->
+</div>
+<!-- END row -->
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/localization/messages_hr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+
+    <script>
+
+        $(document).ready(function() {
+            $.images.preview({
+                input_field: "#SlikaInput",
+                input_base: "#Slika",
+                preview_box: "#ImgPreview img"
+            });
+        });
+
+    </script>
+
+    @if (ViewBag.Success)
+    {
+        <script>
+            $.gritter.add({
+                title: 'Dodavanje nove knjige',
+                text: 'Uspješno ste dodali novu knjigu',
+                sticky: false,
+                time: 5000,
+                //class_name: 'gritter-light',
+                before_open: function() { },
+                after_open: function(e) { },
+                before_close: function(manual_close) { },
+                after_close: function(manual_close) { }
+            });
+        </script>
+    }
+
+}

@@ -17,6 +17,11 @@ namespace PRAPristupBazi.DAL.DatabaseAccess.EntityAccess.IzdavacAccess
             return db.Izdavacs.QuerryMultiple(x => x.Naziv == naziv).FirstOrDefault();
         }
 
+        public static IEnumerable<Izdavac> DohvatiIzdavace(this KnjizaraContext db)
+        {
+            return db.Izdavacs.ToList();
+        }
+
         /***************************************************************************************************************************************************************/
         // CREATE
 

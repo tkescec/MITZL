@@ -38,9 +38,9 @@ app.UseRouting();
 app.UseSession();
 
 // Middlewares
-app.UseGuest();
-app.UseAuthenticate();
-app.UseUserHasAccess();
+//app.UseGuest();
+//app.UseAuthenticate();
+//app.UseUserHasAccess();
 
 // Routes
 app.MapControllerRoute(

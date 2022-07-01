@@ -18,6 +18,11 @@ namespace PRAPristupBazi.DAL.DatabaseAccess.EntityAccess.AutorAccess
             return db.Autors.QuerryMultiple(x => x.Ime == ime && x.Prezime == prezime).FirstOrDefault();
         }
 
+        public static IEnumerable<Autor> DohvatiAutore(this KnjizaraContext db)
+        {
+            return db.Autors.ToList();
+        }
+
         public static IEnumerable<Autor> DohvatiAutorePoImenu(this KnjizaraContext db, string ime)
         {
             return db.Autors.QuerryMultiple(x => x.Ime.Contains(ime));

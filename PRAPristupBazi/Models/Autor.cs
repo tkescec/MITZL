@@ -15,5 +15,10 @@ namespace PRAPristupBazi.Models
         public string? Prezime { get; set; }
 
         public virtual ICollection<Knjiga> Knjigas { get; set; }
+
+        public override string? ToString()
+        {
+            return Ime + " " + Prezime;
+        }
     }
 }
