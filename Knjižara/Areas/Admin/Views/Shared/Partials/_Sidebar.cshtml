@@ -24,7 +24,7 @@
                 </a>
             </div>
             <div class="menu-header">Navigacija</div>
-            <div class="menu-item has-sub @Html.IsActive("Books")">
+            <div class="menu-item has-sub @(ViewContext.RouteData.Values["action"].ToString() != "Borrowed" ? Html.IsActive("Books") : "")">
                 <a href="javascript:;" class="menu-link">
                     <div class="menu-icon">
                         <i class="material-icons">menu_book</i>

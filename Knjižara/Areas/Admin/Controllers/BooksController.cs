@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using PRAPristupBazi.DAL.DatabaseAccess.EntityAccess.AutorAccess;
 using PRAPristupBazi.DAL.DatabaseAccess.EntityAccess.IzdavacAccess;
 using PRAPristupBazi.DAL.DatabaseAccess.EntityAccess.KnjigaAccess;
+using PRAPristupBazi.DAL.DatabaseAccess.EntityAccess.PosudbaAccess;
 using PRAPristupBazi.DAL.DatabaseAccess.EntityAccess.StanjeKnjigeAccess;
 using PRAPristupBazi.Models;
 
@@ -14,13 +15,27 @@ namespace Knjižara.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View();
+            IList<Knjiga> knjige = new List<Knjiga>();
+
+            try
+            {
+                knjige = KnjigaAccess.DohvatiSveKnjige(Db).ToList();
+            }
+            catch (Exception)
+            {
+                ViewBag.Error = "Došlo je do pogreške!";
+            }
+
+            ViewBag.Success = false;
+            GetTempData();
+
+            return View(knjige);
         }
 
         [HttpGet]
         public IActionResult Create()
         {
-            CreateBookViewModel model = new CreateBookViewModel();
+            BookViewModel model = new BookViewModel();
 
             try
             {
@@ -41,7 +56,7 @@ namespace Knjižara.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(CreateBookViewModel model, string returnUrl)
+        public IActionResult Create(BookViewModel model, string returnUrl)
         {
             if (!ModelState.IsValid)
             {
@@ -66,35 +81,193 @@ namespace Knjižara.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit()
+        public IActionResult Edit(int id)
         {
-            CreateBookViewModel viewModel = new CreateBookViewModel();
+            BookViewModel model = new BookViewModel();
 
-            return View(viewModel);
+            try
+            {
+                Knjiga knjiga = KnjigaAccess.DohvatiKnjigu(Db, id);
+                CopyPropertyValues(knjiga, model);
+                model.Autori = AutorAccess.DohvatiAutore(Db).ToList();
+                model.Izdavaci = IzdavacAccess.DohvatiIzdavace(Db).ToList();
+                model.StanjaKnjige = StanjeKnjigeAccess.DohvatiStanjaKnjige(Db).ToList();
+            }
+            catch (Exception)
+            {
+                ViewBag.Error = "Došlo je do pogreške!";
+            }
+
+            ViewBag.Success = false;
+            GetTempData();
+
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(CreateBookViewModel model, string returnUrl)
+        public IActionResult Edit(BookViewModel model, string returnUrl)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            return View(model);
+            Knjiga knjiga = new Knjiga();
+
+            try
+            {
+                CopyPropertyValues(model, knjiga);
+                KnjigaAccess.AzurirajKnjigu(Db, knjiga);
+
+                TempData["Success"] = true;
+            }
+            catch (Exception)
+            {
+                TempData["Error"] = "Došlo je do pogreške!";
+            }
+
+            return RedirectToLocal(returnUrl);
         }
 
         [HttpGet]
         public IActionResult Deleted()
         {
-            return View();
+            IList<Knjiga> knjige = new List<Knjiga>();
+
+            try
+            {
+                knjige = KnjigaAccess.DohvatiIzbrisaneKnjige(Db).ToList();
+            }
+            catch (Exception)
+            {
+                ViewBag.Error = "Došlo je do pogreške!";
+            }
+
+            ViewBag.Success = false;
+            GetTempData();
+
+            return View(knjige);
+        }
+
+        [HttpPut]
+        public IActionResult Restore(int id)
+        {
+            object jsonData;
+
+            try
+            {
+                Knjiga knjiga = KnjigaAccess.DohvatiKnjigu(Db, id);
+
+                if (knjiga != null)
+                {
+                    KnjigaAccess.PovratiKnjigu(Db, knjiga);
+
+                    TempData["Success"] = true;
+                    TempData["Message"] = "Knjiga je uspješno obnovljena!";
+                    jsonData = new { success = true, returnUrl = "/Admin/Books/Deleted" };
+                }
+                else
+                {
+                    TempData["Error"] = "Nepostojeća knjiga!";
+                    jsonData = new { success = false };
+                }
+
+            }
+            catch (Exception)
+            {
+                TempData["Error"] = "Došlo je do pogreške!";
+                jsonData = new { success = false };
+            }
+
+            return Json(jsonData);
+        }
+
+        [HttpDelete]
+        public IActionResult Delete(int id)
+        {
+            object jsonData;
+
+            try
+            {
+                Knjiga knjiga = KnjigaAccess.DohvatiKnjigu(Db, id);
+
+                if (knjiga != null)
+                {
+                    KnjigaAccess.IzbrisiKnjigu(Db, knjiga);
+
+                    TempData["Success"] = true;
+                    TempData["Message"] = "Knjiga je uspješno izbrisana!";
+                    jsonData = new { success = true, returnUrl = "/Admin/Books" };
+                }
+                else
+                {
+                    TempData["Error"] = "Nepostojeća knjiga!";
+                    jsonData = new { success = false };
+                }
+            
+            }
+            catch (Exception)
+            {
+                TempData["Error"] = "Došlo je do pogreške!";
+                jsonData = new { success = false };
+            }
+
+            return Json(jsonData);
         }
 
         [HttpGet]
         public IActionResult Borrowed()
         {
-            return View();
+            IList<Posudba> posudbe = new List<Posudba>();
+
+            try
+            {
+                posudbe = PosudbaAccess.DohvatiSvePosudbe(Db).ToList();
+            }
+            catch (Exception)
+            {
+                ViewBag.Error = "Došlo je do pogreške!";
+            }
+
+            ViewBag.Success = false;
+            GetTempData();
+
+            return View(posudbe);
+        }
+
+        [HttpPut]
+        public IActionResult Return(int id)
+        {
+            object jsonData;
+
+            try
+            {
+                Posudba posudba = PosudbaAccess.DohvatiPosudbu(Db, id);
+
+                if (posudba != null)
+                {
+                    posudba.DatumVracanja = DateTime.Now;
+                    PosudbaAccess.AzurirajPosudbu(Db, posudba);
+
+                    TempData["Success"] = true;
+                    TempData["Message"] = "Knjiga je uspješno vraćena!";
+                    jsonData = new { success = true, returnUrl = "/Admin/Books/Borrowed" };
+                }
+                else
+                {
+                    TempData["Error"] = "Nepostojeća posudba!";
+                    jsonData = new { success = false };
+                }
+
+            }
+            catch (Exception)
+            {
+                TempData["Error"] = "Došlo je do pogreške!";
+                jsonData = new { success = false };
+            }
+
+            return Json(jsonData);
         }
     }
 }

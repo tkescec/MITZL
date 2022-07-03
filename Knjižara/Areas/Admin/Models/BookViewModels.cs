@@ -3,20 +3,21 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Knjižara.Areas.Admin.Models
 {
-    public class BookViewModel
+    public class BaseBookViewModel
     {
+        public int Idknjiga { get; set; }
         public DateTime? DatumDodavanja { get; set; }
         public virtual Autor? Autor { get; set; }
         public virtual Izdavac? Izdavac { get; set; }
         public virtual StanjeKnjige? StanjeKnjige { get; set; }
 
-        public BookViewModel()
+        public BaseBookViewModel()
         {
             DatumDodavanja = DateTime.Now;
         }
     }
 
-    public class CreateBookViewModel : BookViewModel
+    public class BookViewModel : BaseBookViewModel
     {
         [Required]
         public string? Naslov { get; set; }
