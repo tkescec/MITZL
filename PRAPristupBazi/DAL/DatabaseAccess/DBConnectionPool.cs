@@ -14,13 +14,9 @@ namespace PRAPristupBazi.DAL.DatabaseAccess
 
         private static void CreateInstance()
         {
-            var a = ($"Server={System.Environment.MachineName}; Database=PRAKnjizara; Trusted_Connection=True; MultipleActiveResultSets=True")
-                    ;
-            string cc = "Server=LAPTOP-CMNR2AT2\\SQLEXPRESS01;Database=PRAKnjizara; Trusted_Connection=True; MultipleActiveResultSets=True";
-
+          
             var options = new DbContextOptionsBuilder<KnjizaraContext>()
-                
-                .UseSqlServer(cc)
+                .UseSqlServer($"Server={System.Environment.MachineName}; Database=PRAKnjizara; Trusted_Connection=True; MultipleActiveResultSets=True")
                 .UseLazyLoadingProxies()
                 .EnableSensitiveDataLogging()
                 .Options;

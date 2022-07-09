@@ -1,79 +1,84 @@
 ﻿@model BooksViewModel;
 @{
-     ViewBag.Title = "Popis knjiga";
+    ViewBag.Title = "Popis knjiga";
 }
 
 
-    <div style="width:100%; padding:3rem 0rem;">
+<div style="width:100%; padding:3rem 0rem;">
     <div class="BooksConainer">
 
-    @if (Model.knjige.Count > 0)
-    {
-        foreach (var Knjiga in Model.knjige)
-        {
-             <div class="card" style="width: 18rem;">
-  <img class="card-img-top" src="@Knjiga.Slika" alt="Image">
-  <div class="card-body">
-    <h5 class="card-title">@Knjiga.Naslov</h5>
-    <a href="#" class="btn btn-primary">Dodaj u košaricu</a>
-  </div>
-</div>  
-        }
-    }
-    </div>
-    
-    <div class="pagination" aria-label="Page navigation example">
-  <ul class="pagination">
-              @if(@Model.prevPage!=null){
-    <li class="page-item"><a class="page-link" href="?page=@Model.prevPage&@Model.queryString">Previous</a></li>
-              }
-            @{
-                for(int i=@Model.currentPage;i<= @Model.currentPage+5;i++){
-                    if (@i*12 > @Model.UkupniBrojKnjiga) break;
-                    <li class="page-item"><a class="page-link" href="?page=@i&@Model.queryString">@i</a></li>
-
+        @{
+            foreach (var Knjiga in Model.knjige)
+            {
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="@Knjiga.Slika" alt="Image">
+                    <div class="card-body">
+                        <h5 class="card-title">@Knjiga.Naslov</h5>
+                        <a href="#" class="btn btn-primary">Dodaj u košaricu</a>
+                    </div>
+                </div>
             }
         }
-        @if(@Model.nextPage!=null){
-                    <li class="page-item"><a class="page-link" href="?page=@Model.nextPage&@Model.queryString">Next</a></li>
-                }
-  </ul>
-</div>
     </div>
-   
+
+    <div class="pagination" aria-label="Page navigation example">
+        <ul class="pagination">
+            @if (@Model.prevPage != null)
+            {
+                <li class="page-item"><a class="page-link" href="?page=@Model.prevPage&@Model.queryString">Previous</a></li>
+            }
+            @{
+                for (int i = @Model.currentPage; i <= @Model.currentPage + 5; i++)
+                {
+                    if (@i * 12 > @Model.UkupniBrojKnjiga) break;
+                    <li class="page-item"><a class="page-link" href="?page=@i&@Model.queryString">@i</a></li>
+
+                }
+            }
+            @if (@Model.nextPage != null)
+            {
+                <li class="page-item"><a class="page-link" href="?page=@Model.nextPage&@Model.queryString">Next</a></li>
+            }
+        </ul>
+    </div>
+</div>
+
 
 <style>
-    img{
-        height:150px;
-        object-fit:cover;
-    }
-    .card-body{
-        display:flex;
-        flex-direction:column;
-        align-items:center;
-    }
-    .BooksConainer{
-    display:grid;
-    grid-template-columns:1fr;
-       place-items: center;
-    gap:1rem;
-    padding:3rem;
-    box-sizing:border-box;
-}
-    @@media screen and (min-width: 500px){
-    .BooksConainer{
-    grid-template-columns:repeat(2, 1fr);
-}
-    }
-    @@media screen and (min-width: 1000px){
-    .BooksConainer{
-    grid-template-columns:repeat(3, 1fr);
-      
-}
+    img {
+        height: 150px;
+        object-fit: cover;
     }
 
-    .pagination{
-        margin:0 auto;
+    .card-body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .BooksConainer {
+        display: grid;
+        grid-template-columns: 1fr;
+        place-items: center;
+        gap: 1rem;
+        padding: 3rem;
+        box-sizing: border-box;
+    }
+
+    @@media screen and (min-width: 500px) {
+        .BooksConainer {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @@media screen and (min-width: 1000px) {
+        .BooksConainer {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    .pagination {
+        margin: 0 auto;
     }
 
 </style>

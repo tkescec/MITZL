@@ -126,12 +126,11 @@
 
 <script defer>
 
-    function onFormSubmitDefault(e){
-        e.preventDefault();
+    function onSearchFormSubmit(e){
+       e.preventDefault();
        let searchInput = document.getElementById("search-input").value;
        window.location.replace("/books?search="+searchInput);
-
     }
-    document.getElementById("search-form").addEventListener("submit",
-    typeof onSearchFormSubmit === "undefined"?  onFormSubmitDefault : onSearchFormSubmit);
+
+    document.getElementById("search-form").addEventListener("submit", onSearchFormSubmit );
 </script>
