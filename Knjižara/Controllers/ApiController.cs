@@ -34,7 +34,7 @@ namespace Knjižara.Controllers
         [HttpGet("/login/verify")]
         public async Task<IActionResult> GET([FromQuery(Name = "SifraKorisnika")] string sifra)
         {
-           Korisnik user =  KorisnikAccess.DohvatiKorisnikaPoSifri(Db, sifra);
+            Korisnik user = KorisnikAccess.DohvatiKorisnikaPoSifri(Db, sifra);
             if (user.Aktiviran == false)
             {
                 user.Aktiviran = true;
@@ -48,6 +48,6 @@ namespace Knjižara.Controllers
             return Redirect("/");
         }
 
-       
+
     }
 }

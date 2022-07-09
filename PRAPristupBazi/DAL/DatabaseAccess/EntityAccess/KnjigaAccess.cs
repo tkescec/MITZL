@@ -14,6 +14,7 @@ namespace PRAPristupBazi.DAL.DatabaseAccess.EntityAccess.KnjigaAccess
 
         public static IEnumerable<Knjiga> DohvatiSveKnjige(this KnjizaraContext db)
         {
+            var a = db.Knjigas.QuerryAll();
             return db.Knjigas.QuerryAll();
         }
 

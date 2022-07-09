@@ -1,0 +1,17 @@
+﻿@model BooksViewModel;
+@{
+     ViewBag.Title = "Popis knjiga";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+
+<div class="login login-v1">
+    @if (Model.knjige.Count > 0)
+    {
+        foreach (var Knjiga in Model.knjige)
+        {
+            <div>
+                @Knjiga.Naslov
+            </div>
+        }
+    }
+</div>
