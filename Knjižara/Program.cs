@@ -40,7 +40,6 @@ app.UseSession();
 
 // Middlewares
 app.UseGuest();
-app.UseAuthenticate();
 app.UseUserHasAccess();
 
 // Routes

@@ -25,6 +25,11 @@ namespace PRAPristupBazi.DAL.DatabaseAccess
             return dbset.Skip(skip).Take(take).ToList();
         }
 
+        public static int ItemsCount<TEntity>(this DbSet<TEntity> dbset, Func<TEntity, bool>? lambda) where TEntity : class
+        {
+            return lambda==null? dbset.Count() : dbset.Where(lambda).Count();
+        }
+
         public static IEnumerable<TEntity> QuerryMultiple<TEntity>(this DbSet<TEntity> dbset, Func<TEntity, bool> lambda) where TEntity : class
         {
             return dbset.Where(lambda).ToList();
