@@ -1,0 +1,108 @@
+﻿@model BookViewModel;
+@{
+    ViewBag.Title = "Popis knjiga";
+}
+
+
+<style>
+    .imgSection {
+        width: 100%;
+        height: 300px;
+    }
+
+    .MainImage {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        box-shadow: 0px 0px 2px black;
+        border-radius: 0.4rem;
+    }
+
+    .Description {
+        justify-content: flex-start;
+    }
+
+    section {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .ItemWrapper {
+        max-width: 1400px;
+        padding: 3rem 0rem;
+        margin: 0 auto;
+        width: 100%;
+        display: grid;
+        gap: 1rem;
+        place-items: center;
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .buttonsWrapper {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .prep {
+        cursor: pointer;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    @@media screen and (max-width: 900px) {
+        .ItemWrapper {
+            grid-template-columns: 1fr;
+        }
+
+        section {
+            align-items: center;
+        }
+    }
+</style>
+<div class="ItemWrapper">
+
+    <section class="imgSection">
+        <img src="@Model.knjiga.Slika" class="MainImage" />
+    </section>
+    <section>
+        <h4>@Model.knjiga.Autor</h4>
+        <h4>@Model.knjiga.Naslov</h4>
+        <p><strong>Cijena kupnje: </strong>@Model.knjiga.CijenaZaKupovinu</p>
+        <p><strong>Cijena posudbe: </strong>@Model.knjiga.CijenaZaNajam HRK</p>
+        <div class="buttonsWrapper">
+
+            <button type="button" class="btn btn-primary">
+                Posudi
+            </button>
+            <button type="button" class="btn btn-primary">
+                Kupi
+            </button>
+        </div>
+    </section>
+    <section class="Description">
+        <h2>Kratki opis</h2>
+        <p>@Model.knjiga.KratakSadrzaj</p>
+    </section>
+</div>
+
+<div class="ItemWrapper">
+    <section class="imgSection prep">
+        <img id="@Model.preporuceneKnjige[0].Idknjiga" src="@Model.preporuceneKnjige[0].Slika" class="MainImage" />
+    </section>
+    <section class="imgSection prep">
+        <img id="@Model.preporuceneKnjige[1].Idknjiga" src="@Model.preporuceneKnjige[1].Slika" class="MainImage" />
+    </section>
+    <section class="imgSection prep">
+        <img id="@Model.preporuceneKnjige[2].Idknjiga" src="@Model.preporuceneKnjige[2].Slika" class="MainImage" />
+    </section>
+</div>
+
+<script>
+    document.querySelectorAll(".prep").forEach(image=>{
+        image.addEventListener("click",e=>{
+            window.location.replace("/books/book/"+e.target.id)
+        })
+    })
+</script>
+

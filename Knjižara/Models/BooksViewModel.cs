@@ -15,18 +15,18 @@ namespace Knjižara.Models
         public void setCurrentPage(int currentPage)
         {
             this.currentPage = currentPage;
-            if(currentPage != 1)
+            if (currentPage != 1)
             {
-                prevPage = currentPage-1;
+                prevPage = currentPage - 1;
             }
-            if(UkupniBrojKnjiga!=0 && currentPage != UkupniBrojKnjiga)
+            if (UkupniBrojKnjiga != 0 && currentPage != UkupniBrojKnjiga)
             {
-                nextPage = currentPage+1;
+                nextPage = currentPage + 1;
             }
         }
         public void addQueryString(string? value, string? searchBy)
         {
-            if(value != null)
+            if (value != null)
             {
                 queryString = $"search={value}{(searchBy == null ? "" : $"&searchBy={searchBy}")}";
             }
