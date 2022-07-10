@@ -12,9 +12,14 @@ namespace PRAPristupBazi.DAL.DatabaseAccess.EntityAccess.KnjigaAccess
         /***************************************************************************************************************************************************************/
         // RETRIEVE
 
+        public static Knjiga DohvatiKnjigu(this KnjizaraContext db, int id)
+        {
+            return db.Knjigas.QuerryMultiple(x => x.Idknjiga == id).FirstOrDefault();
+        }
+
         public static IEnumerable<Knjiga> DohvatiSveKnjige(this KnjizaraContext db)
         {
-            return db.Knjigas.QuerryAll();
+            return db.Knjigas.QuerryMultiple(x => x.DatumBrisanja == null);
         }
 
         public static IEnumerable<Knjiga> DohvatiSveKnjige(this KnjizaraContext db, int preskoci, int dohvati)

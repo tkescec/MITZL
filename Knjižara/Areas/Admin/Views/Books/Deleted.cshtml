@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<PRAPristupBazi.Models.Knjiga>
 @{
-    ViewBag.Title = "Dostupne knjige";
+    ViewBag.Title = "Izbrisane knjige";
 }
 
 <!-- BEGIN page-header -->
@@ -17,7 +17,7 @@
         <div class="panel panel-inverse" data-sortable-id="books">
             <!-- BEGIN panel-heading -->
             <div class="panel-heading">
-                <h4 class="panel-title">Dostupne knjige</h4>
+                <h4 class="panel-title">Izbrisane knjige</h4>
                 <div class="panel-heading-btn">
                     <a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
                     <a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
@@ -56,8 +56,7 @@
                                         <td align="center">@string.Format("{0:N2}", knjiga.CijenaZaKupovinu)</td>
                                         <td align="center">@string.Format("{0:N2}", knjiga.CijenaZaNajam)</td>
                                         <td align="center">
-                                            <a asp-area="Admin" asp-controller="Books" asp-action="Edit" asp-route-id="@knjiga.Idknjiga" class="btn btn-primary btn-xs">Uredi</a>
-                                            <a href="javascript:;" class="btn btn-danger btn-xs delete-book" data-book-id="@knjiga.Idknjiga">Izbriši</a>
+                                            <a href="javascript:;" class="btn btn-primary btn-xs restore-book" data-book-id="@knjiga.Idknjiga">Obnovi</a>
                                         </td>
                                     </tr>
                                 }
@@ -84,18 +83,21 @@
     <script src="~/lib/datatables.net-bs5/js/dataTables.bootstrap5.min.js" asp-append-version="true"></script>
     <script src="~/lib/datatables.net-responsive/js/dataTables.responsive.min.js" asp-append-version="true"></script>
     <script src="~/lib/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js" asp-append-version="true"></script>
+    <script src="~/lib/sweetalert/dist/sweetalert.min.js" asp-append-version="true"></script>
 
     <script>
 
         $(document).ready(function() {
             
-            $.books.delete({
-                delete_btn: ".delete-book",
+
+            $.books.restore({
+                restore_btn: ".restore-book",
             });
 
             $('#BooksDataTable').DataTable({
-                    responsive: false
+                responsive: false
             });
+
         });
 
     </script>

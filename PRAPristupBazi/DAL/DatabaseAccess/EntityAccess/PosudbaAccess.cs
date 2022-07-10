@@ -11,6 +11,10 @@ namespace PRAPristupBazi.DAL.DatabaseAccess.EntityAccess.PosudbaAccess
     {
         /***************************************************************************************************************************************************************/
         // RETRIEVE
+        public static Posudba DohvatiPosudbu(this KnjizaraContext db, int id)
+        {
+            return db.Posudbas.QuerryMultiple(x => x.Idposudba == id).FirstOrDefault();
+        }
 
         public static IEnumerable<Posudba> DohvatiSvePosudbe(this KnjizaraContext db)
         {

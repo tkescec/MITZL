@@ -71,11 +71,16 @@ namespace Knjižara.Areas.Admin.Controllers
                         }
                         var propType = prop.PropertyType;
                         Type t = Nullable.GetUnderlyingType(propType) ?? propType;
-                        inValue = (inValue == null) ? null : Convert.ChangeType(inValue, t);
-                        if (prop.CanWrite && prop.GetSetMethod(/*nonPublic*/ true).IsPublic)
+                        if (inValue is IConvertible)
                         {
-                            prop.SetValue(destination, inValue);
+                            inValue = (inValue == null) ? null : Convert.ChangeType(inValue, t);
+                            if (prop.CanWrite && prop.GetSetMethod(/*nonPublic*/ true).IsPublic)
+                            {
+
+                                prop.SetValue(destination, inValue);
+                            }
                         }
+                        
                     }
                     else if (tryParse)
                     {

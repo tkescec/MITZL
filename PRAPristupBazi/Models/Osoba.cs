@@ -20,5 +20,10 @@ namespace PRAPristupBazi.Models
 
         public virtual Grad? Grad { get; set; }
         public virtual ICollection<Korisnik> Korisniks { get; set; }
+
+        public override string? ToString()
+        {
+            return Ime + " " + Prezime;
+        }
     }
 }

@@ -173,7 +173,7 @@ create table Knjizara
 	Adresa nvarchar(100),
 	OIB char(11),
 	IBAN varchar(34),
-	Logo nvarchar(100),
+	Logo nvarchar(max),
 	UvjetiKoristenja nvarchar(100)
 )
 
