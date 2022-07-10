@@ -66,16 +66,16 @@
         <img src="@Model.knjiga.Slika" class="MainImage" />
     </section>
     <section>
-        <h4>@Model.knjiga.Autor</h4>
+        <h4><a href="/autor/@Model.knjiga.Autor.Idautor">@Model.knjiga.Autor</a></h4>
         <h4>@Model.knjiga.Naslov</h4>
         <p><strong>Cijena kupnje: </strong>@Model.knjiga.CijenaZaKupovinu</p>
         <p><strong>Cijena posudbe: </strong>@Model.knjiga.CijenaZaNajam HRK</p>
         <div class="buttonsWrapper">
 
-            <button type="button" class="btn btn-primary">
+            <button id="posudi" type="button" class="btn btn-primary">
                 Posudi
             </button>
-            <button type="button" class="btn btn-primary">
+            <button id="kupi" type="button" class="btn btn-primary">
                 Kupi
             </button>
         </div>
@@ -99,10 +99,47 @@
 </div>
 
 <script>
+    const bookId = @Model.knjiga.Idknjiga;
+    function setCookie(name,value,days) {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days*24*60*60*1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+}
+function getCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
+}
     document.querySelectorAll(".prep").forEach(image=>{
         image.addEventListener("click",e=>{
             window.location.replace("/books/book/"+e.target.id)
         })
     })
+
+    const posudiIliKupiKnjigu = (radnja) =>{
+        let kosarica = getCookie("kosarica")
+           let knjige = kosarica? JSON.parse(kosarica) : {};
+           if(knjige[bookId]!==radnja){
+               knjige[bookId] = radnja;
+               setCookie("kosarica", JSON.stringify(knjige),1);
+           }
+    }
+
+    document.getElementById("posudi").addEventListener("click",e=>{
+       posudiIliKupiKnjigu("posudi");
+    })
+    document.getElementById("kupi").addEventListener("click",e=>{
+       posudiIliKupiKnjigu("kupi");
+    })
+
 </script>
 
