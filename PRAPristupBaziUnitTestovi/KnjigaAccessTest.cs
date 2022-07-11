@@ -96,6 +96,21 @@ namespace PRAPristupBaziUnitTestovi
 
         /***************************************************************************************************************************************************************/
 
+        // novi testovi (07/2022)
+
+        [TestMethod]
+        public void TestDBOperation_DohvatiKnijgePoIDKnjigaCSV()
+        {
+            var db = DBConnectionPool.GetDBConnection();
+
+            string idknjigacsv = "1,2,3,7,9,12,13";
+            var t = db?.DohvatiKnijgePoIDKnjigaCSV(idknjigacsv);
+
+            Assert.IsTrue(t.Count() == 7);
+        }
+
+        /***************************************************************************************************************************************************************/
+
         [TestMethod]
         public void TestDBOperation_DodajKnjigu()
         {
