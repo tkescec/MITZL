@@ -58,6 +58,13 @@ namespace PRAPristupBazi.DAL.DatabaseAccess.EntityAccess.KnjigaAccess
             return db.Knjigas.QuerryMultiple_Partial(x => x.Naslov.Contains(naslov), preskoci, dohvati);
         }
 
+        public static IEnumerable<Knjiga> DohvatiKnijgePoIDKnjigaCSV(this KnjizaraContext db, string IDKnjigaCSV)
+        {
+            List<int> IDKnjigaInt = IDKnjigaCSV.Split(',').Select(int.Parse).ToList();
+
+            return db.Knjigas.QuerryMultiple(x => IDKnjigaInt.Contains(x.Idknjiga));
+        }
+
         /***************************************************************************************************************************************************************/
         // CREATE
 
