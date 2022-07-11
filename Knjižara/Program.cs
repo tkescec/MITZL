@@ -1,6 +1,6 @@
-using Knji≈æara.Mailer;
-using Knji≈æara.Mailer.Models;
-using Knji≈æara.Middlewares;
+using Knjiûara.Mailer;
+using Knjiûara.Mailer.Models;
+using Knjiûara.Middlewares;
 using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +16,7 @@ builder.Services.Configure<MailSettings>(new ConfigurationBuilder().AddJsonFile(
 
 builder.Services.AddTransient<IEmailService, EmailService>();
 
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddSession(options =>
 {
@@ -31,6 +32,9 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
 }
+
+
+
 app.UseStaticFiles();
 
 app.UseRouting();
@@ -38,9 +42,9 @@ app.UseRouting();
 app.UseSession();
 
 // Middlewares
-//app.UseGuest();
-//app.UseAuthenticate();
-//app.UseUserHasAccess();
+app.UseGuest();
+app.UseAuthenticate();
+app.UseUserHasAccess();
 
 // Routes
 app.MapControllerRoute(

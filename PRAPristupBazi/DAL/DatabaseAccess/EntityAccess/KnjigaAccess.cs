@@ -27,6 +27,17 @@ namespace PRAPristupBazi.DAL.DatabaseAccess.EntityAccess.KnjigaAccess
             return db.Knjigas.QuerryAll_Partial(preskoci, dohvati);
         }
 
+        public static int DohvatiBrojKnjiga(this KnjizaraContext db)
+        {
+            return db.Knjigas.ItemsCount(null);
+        }
+
+        public static int DohvatiBrojKnjigaPoNaslovuIliAutoru(this KnjizaraContext db, string searchValue, string? searchBy)
+        {
+            return searchBy==null? db.Knjigas.ItemsCount(x => x.Naslov.Contains(searchValue)) 
+                : db.Knjigas.ItemsCount(x =>  (x.Autor.Ime + x.Autor.Prezime).Contains(searchValue));
+        }
+
         public static IEnumerable<Knjiga> DohvatiIzbrisaneKnjige(this KnjizaraContext db)
         {
             return db.Knjigas.QuerryMultiple(x => x.DatumBrisanja != null);
