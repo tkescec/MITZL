@@ -26,6 +26,10 @@ namespace PRAPristupBazi.DAL.DatabaseAccess.EntityAccess.KnjigaAccess
         {
             return db.Knjigas.QuerryAll_Partial(preskoci, dohvati);
         }
+        public static IEnumerable<Knjiga> DohvatiSveKnjigeGdjeIDNije(this KnjizaraContext db, int preskoci, int dohvati, int id)
+        {
+            return db.Knjigas.QuerryMultiple_Partial(e => e.Idknjiga != id, preskoci, dohvati);
+        }
 
         public static int DohvatiBrojKnjiga(this KnjizaraContext db)
         {
@@ -34,8 +38,8 @@ namespace PRAPristupBazi.DAL.DatabaseAccess.EntityAccess.KnjigaAccess
 
         public static int DohvatiBrojKnjigaPoNaslovuIliAutoru(this KnjizaraContext db, string searchValue, string? searchBy)
         {
-            return searchBy==null? db.Knjigas.ItemsCount(x => x.Naslov.Contains(searchValue)) 
-                : db.Knjigas.ItemsCount(x =>  (x.Autor.Ime + x.Autor.Prezime).Contains(searchValue));
+            return searchBy == null ? db.Knjigas.ItemsCount(x => x.Naslov.Contains(searchValue))
+                : db.Knjigas.ItemsCount(x => (x.Autor.Ime + x.Autor.Prezime).Contains(searchValue));
         }
 
         public static IEnumerable<Knjiga> DohvatiIzbrisaneKnjige(this KnjizaraContext db)
@@ -52,11 +56,33 @@ namespace PRAPristupBazi.DAL.DatabaseAccess.EntityAccess.KnjigaAccess
         {
             return db.Knjigas.QuerryMultiple(x => x.Naslov.Contains(naslov));
         }
+        public static IEnumerable<Knjiga> DohvatiKnjigePoAutoru(this KnjizaraContext db, string autorIme, int preskoci, int dohvati)
+        {
+            return db.Knjigas.QuerryMultiple_Partial(x =>
+            {
+                string ime = x.Autor.Ime;
+                string prezime = x.Autor.Prezime;
+                string punoIme = $"{ime} {prezime}";
+                return punoIme.Contains(autorIme);
+            }, preskoci, dohvati);
+        }
 
         public static IEnumerable<Knjiga> DohvatiKnjigePoNaslovu(this KnjizaraContext db, string naslov, int preskoci, int dohvati)
         {
             return db.Knjigas.QuerryMultiple_Partial(x => x.Naslov.Contains(naslov), preskoci, dohvati);
         }
+        public static Knjiga DohvatiKnjiguPoIDu(this KnjizaraContext db, int id)
+        {
+            return db.Knjigas.QuerrySingle(x => x.Idknjiga == id);
+        }
+
+        public static List<Knjiga> DohvatiKnjigePoIDu(this KnjizaraContext db, List<int> ids)
+        {
+
+            return (List<Knjiga>)db.Knjigas.QuerryMultiple(x => ids.Contains((int)x.AutorId));
+        }
+
+
 
         public static IEnumerable<Knjiga> DohvatiKnijgePoIDKnjigaCSV(this KnjizaraContext db, string IDKnjigaCSV)
         {

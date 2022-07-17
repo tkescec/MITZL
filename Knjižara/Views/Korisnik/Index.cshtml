@@ -1,0 +1,131 @@
+﻿@model KorisnikViewModel;
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="boxWrapper">
+    <section>
+        <table>
+            <thead>
+                <tr>
+                    <th>Posljednje kupljene knjige</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach (var item in @Model.posljednjeKupnje)
+                    {
+                        foreach (var knjiga in @item.Stavkas)
+                        {
+                            <tr>
+                                <td>@knjiga.Knjiga.Naslov</td>
+                            </tr>
+
+                        }
+                    }
+                }
+                <tr>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+    <section>
+        <table>
+            <thead>
+                <tr>
+                    <th>Naslov</th>
+                    <th>Datum vraćanja</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @{
+                    foreach (var knjiga in @Model.korisnik.Posudbas.Select((value, i) => new { i, value }))
+                    if(@knjiga.i <5)
+                    {
+                        <tr>
+                            <td>@knjiga.value.Knjiga.Naslov</td>
+                            <td>@knjiga.value.DatumVracanja</td>
+                            </tr>
+                        }
+                }
+                <tr>
+                </tr>
+            </tbody>
+        </table>
+
+    </section>
+</div>
+<div class="boxWrapper" style="justify-content:flex-start;">
+    <div class="miniSection profil"><a href="/korisnik/uredi">Uredi profil</a></div>
+    <div class="miniSection">
+       Iznos zakasnine: @{
+            decimal zakasnina = 0;
+            foreach (var posudba in @Model.korisnik.Posudbas)
+            {
+                zakasnina += posudba.ZakasninaPoDanu.Zakasnina.Value;
+            }
+            @Math.Round(zakasnina,2) 
+        } HRK
+        
+    </div>
+</div>
+
+
+
+<style>
+
+    .boxWrapper {
+        width: 100%;
+        display: grid;
+        place-items: center;
+        grid-template-columns: repeat(2, 1fr);
+        padding: 5%;
+        box-sizing: border-box;
+        gap:2rem;
+    }
+
+    @@media only screen and (max-width: 991px) {
+        .boxWrapper {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    a{
+        color:black;
+    }
+
+    section {
+        padding: 5%;
+        box-sizing: border-box;
+        border-color: black;
+        border-width:1px;
+        border-style:solid;
+        width:100%;
+        height:100%;
+        min-height:300px;
+    }
+
+    table {
+        border-collapse: separate;
+        border-spacing: 0 1em;
+        width:100%;
+    }
+    .miniSection{
+        margin:1rem auto;
+        width:150px;
+        height:50px !important;
+    }
+    .profil{
+        background-color:lightblue;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        cursor:pointer;
+        border-color: black;
+        border-width:1px;
+        border-style:solid;
+    }
+
+</style>

@@ -32,7 +32,7 @@ namespace Knjižara.Models
         [Display(Name = "Poštanski broj", Prompt = "Poštanski broj")]
         public string? PostalCode { get; set; }
         
-        [Display(Name = "Adresa", Prompt = "Adresa")]
+        [Display(Name = "Address", Prompt = "Address")]
         public string? Address { get; set; }
         
         [Display(Name = "Grad", Prompt = "Grad")]
