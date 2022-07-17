@@ -51,6 +51,16 @@ namespace PRAPristupBazi.DAL.DatabaseAccess.EntityAccess.KnjigaAccess
         {
             return db.Knjigas.QuerryMultiple(x => x.Naslov.Contains(naslov));
         }
+        public static IEnumerable<Knjiga> DohvatiKnjigePoAutoru(this KnjizaraContext db, string autorIme, int preskoci, int dohvati)
+        {
+            return db.Knjigas.QuerryMultiple_Partial(x =>
+            {
+                string ime = x.Autor.Ime;
+                string prezime = x.Autor.Prezime;
+                string punoIme = $"{ime} {prezime}";
+                return punoIme.Contains(autorIme);
+            }, preskoci, dohvati);
+        }
 
         public static IEnumerable<Knjiga> DohvatiKnjigePoNaslovu(this KnjizaraContext db, string naslov, int preskoci, int dohvati)
         {
@@ -59,6 +69,12 @@ namespace PRAPristupBazi.DAL.DatabaseAccess.EntityAccess.KnjigaAccess
         public static Knjiga DohvatiKnjiguPoIDu(this KnjizaraContext db, int id)
         {
             return db.Knjigas.QuerrySingle(x => x.Idknjiga == id);
+        }
+
+        public static List<Knjiga> DohvatiKnjigePoIDu(this KnjizaraContext db, List<int> ids)
+        {
+
+            return (List<Knjiga>)db.Knjigas.QuerryMultiple(x => ids.Contains((int)x.AutorId));
         }
 
 

@@ -17,7 +17,7 @@ namespace Knjižara.Controllers
             {
                 booksViewModel.knjige = (IList<PRAPristupBazi.Models.Knjiga>)(search == null ?
                      KnjigaAccess.DohvatiSveKnjige(Db, booksViewModel.offset, limit)
-                    : KnjigaAccess.DohvatiKnjigePoNaslovu(Db, search, booksViewModel.offset, limit));
+                    :(searchBy!=null?KnjigaAccess.DohvatiKnjigePoAutoru(Db, search, booksViewModel.offset, limit) : KnjigaAccess.DohvatiKnjigePoNaslovu(Db, search, booksViewModel.offset, limit)));
                 booksViewModel.UkupniBrojKnjiga = search == null ? KnjigaAccess.DohvatiBrojKnjiga(Db) : KnjigaAccess.DohvatiBrojKnjigaPoNaslovuIliAutoru(Db, search, searchBy);
             }
             catch (Exception ex)

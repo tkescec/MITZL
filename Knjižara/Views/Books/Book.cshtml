@@ -67,18 +67,26 @@
     </section>
     <section>
         <h4><a href="/autor/@Model.knjiga.Autor.Idautor">@Model.knjiga.Autor</a></h4>
-        <h4>@Model.knjiga.Naslov</h4>
+        <h4
+        id="naslov"
+        >
+            @Model.knjiga.Naslov</h4>
         <p><strong>Cijena kupnje: </strong>@Model.knjiga.CijenaZaKupovinu</p>
         <p><strong>Cijena posudbe: </strong>@Model.knjiga.CijenaZaNajam HRK</p>
-        <div class="buttonsWrapper">
+        @{
+            if(@Model.knjiga.DostupnaKolicina>0){
+            <div class="buttonsWrapper">
 
-            <button id="posudi" type="button" class="btn btn-primary">
+            <button  id="posudi" type="button" class="btn btn-primary">
                 Posudi
             </button>
             <button id="kupi" type="button" class="btn btn-primary">
                 Kupi
             </button>
         </div>
+            }
+        }
+        
     </section>
     <section class="Description">
         <h2>Kratki opis</h2>
@@ -100,6 +108,7 @@
 
 <script>
     const bookId = @Model.knjiga.Idknjiga;
+    const naslov = document.getElementById("naslov").innerText
     function setCookie(name,value,days) {
     var expires = "";
     if (days) {
@@ -125,12 +134,13 @@ function getCookie(name) {
         })
     })
 
-    const posudiIliKupiKnjigu = (radnja) =>{
+    const posudiIliKupiKnjigu = (akcija) =>{
+        const radnja = akcija + "|" + naslov;
         let kosarica = getCookie("kosarica")
            let knjige = kosarica? JSON.parse(kosarica) : {};
            if(knjige[bookId]!==radnja){
                knjige[bookId] = radnja;
-               setCookie("kosarica", JSON.stringify(knjige),1);
+               setCookie("kosarica", JSON.stringify(knjige),1000);
            }
     }
 

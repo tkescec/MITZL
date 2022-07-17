@@ -3,7 +3,7 @@
 
 @if (!string.IsNullOrEmpty(@Accessor.HttpContext.Session.GetString("_UserName")))
 {
-    <a href="javascript:;">
+    <a href="/korisnik">
         <img src="~/front/img/user/user-1.jpg" class="user-img" alt="" />
         <span class="d-none d-xl-inline">@Accessor.HttpContext.Session.GetString("_UserName")</span>
     </a>

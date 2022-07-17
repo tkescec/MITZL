@@ -1,4 +1,14 @@
-﻿<div id="header" class="header">
+﻿<style>
+.switch-wrapper{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:0.5rem 0rem;
+    gap:0.5rem;
+}
+</style>
+
+<div id="header" class="header">
     <!-- BEGIN container -->
     <div class="container">
         <!-- BEGIN header-container -->
@@ -12,7 +22,7 @@
             <!-- END navbar-toggle -->
             <!-- BEGIN header-logo -->
             <div class="header-logo">
-                <a href="index.html">
+                <a href="/">
                     <span class="brand-logo"></span>
                     <span class="brand-text">
                         <span>Super</span>Knjižara
@@ -28,17 +38,24 @@
                 <div class="collapse navbar-collapse" id="navbar-collapse">
                     <ul class="nav justify-content-center">
 
-                        <li class="active"><a href="index.html">Home</a></li>
+                        <li class="active"><a href="/">Home</a></li>
 
 
-                        <li><a href="product.html">New Arrival</a></li>
 
                         <li class="dropdown dropdown-hover">
                             <a href="#" data-bs-toggle="dropdown">
                                 <i class="fa fa-search search-btn"></i>
                                 <span class="arrow top"></span>
                             </a>
+
                             <div class="dropdown-menu p-15px">
+                                <div class="switch-wrapper">
+                                    Pretraži po autoru
+                                    <input id="switch" type="checkbox" class="switch"
+                                           data-on-text="normal"
+                                           data-off-text="abnormal"
+                                           data-size="large" />
+                                </div>
                                 <form id="search-form" name="search_form">
                                     <div class="input-group">
                                         <input id="search-input" type="text" placeholder="Search" class="form-control bg-light" />
@@ -55,60 +72,12 @@
             <div class="header-nav">
                 <ul class="nav justify-content-end">
                     <li class="dropdown dropdown-hover">
-                        <a href="#" class="header-cart" data-bs-toggle="dropdown">
+                        <a href="/kosarica">
                             <i class="fa fa-shopping-bag"></i>
-                            <span class="total">2</span>
+                            <span style="visibility:hidden;" id="total" class="total"></span>
                             <span class="arrow top"></span>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-cart p-0">
-                            <div class="cart-header">
-                                <h4 class="cart-title">Shopping Bag (1) </h4>
-                            </div>
-                            <div class="cart-body">
-                                <ul class="cart-item">
-                                    <li>
-                                        <div class="cart-item-image"><img src="../assets/img/product/product-ipad.jpg" alt="" /></div>
-                                        <div class="cart-item-info">
-                                            <h4>iPad Pro Wi-Fi 128GB - Silver</h4>
-                                            <p class="price">$699.00</p>
-                                        </div>
-                                        <div class="cart-item-close">
-                                            <a href="#" data-bs-toggle="tooltip" data-bs-title="Remove">&times;</a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="cart-item-image"><img src="../assets/img/product/product-imac.jpg" alt="" /></div>
-                                        <div class="cart-item-info">
-                                            <h4>21.5-inch iMac</h4>
-                                            <p class="price">$1299.00</p>
-                                        </div>
-                                        <div class="cart-item-close">
-                                            <a href="#" data-bs-toggle="tooltip" data-bs-title="Remove">&times;</a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="cart-item-image"><img src="../assets/img/product/product-iphone.png" alt="" /></div>
-                                        <div class="cart-item-info">
-                                            <h4>iPhone 6s 16GB - Silver</h4>
-                                            <p class="price">$649.00</p>
-                                        </div>
-                                        <div class="cart-item-close">
-                                            <a href="#" data-bs-toggle="tooltip" data-bs-title="Remove">&times;</a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="cart-footer">
-                                <div class="row gx-2">
-                                    <div class="col-6">
-                                        <a href="checkout_cart.html" class="btn btn-default btn-theme d-block">View Cart</a>
-                                    </div>
-                                    <div class="col-6">
-                                        <a href="checkout_cart.html" class="btn btn-dark btn-theme d-block">Checkout</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
                     </li>
                     <li class="divider"></li>
                     <li>
@@ -125,12 +94,27 @@
 
 
 <script defer>
-
-    function onSearchFormSubmit(e){
-       e.preventDefault();
-       let searchInput = document.getElementById("search-input").value;
-       window.location.replace("/books?search="+searchInput);
+        function getCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0;i < ca.length;i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1,c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        }
+        return null;
     }
+    if(getCookie("kosarica")){
+        document.getElementById("total").style.visibility="visible";
+    };
+        function onSearchFormSubmit(e){
+           e.preventDefault();
+           const autor = document.getElementById('switch').checked;
+           alert(autor);
+           const autorQuery = autor?"&searchBy='Autor'":"";
+           let searchInput = document.getElementById("search-input").value;
+           window.location.replace("/books?search="+searchInput+autorQuery);
+        }
 
-    document.getElementById("search-form").addEventListener("submit", onSearchFormSubmit );
+        document.getElementById("search-form").addEventListener("submit", onSearchFormSubmit );
 </script>

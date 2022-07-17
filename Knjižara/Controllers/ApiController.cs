@@ -2,8 +2,11 @@
 using Knjižara.Mailer.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using PRAPristupBazi.DAL.DatabaseAccess.EntityAccess.KnjigaAccess;
 using PRAPristupBazi.DAL.DatabaseAccess.EntityAccess.KorisnikAccess;
 using PRAPristupBazi.Models;
+using System.Runtime.Serialization;
 
 namespace Knjižara.Controllers
 {
@@ -48,6 +51,15 @@ namespace Knjižara.Controllers
             return Redirect("/");
         }
 
+        [HttpGet("/api/getBooksById")]
+        
+        public string? getBooks([FromQuery(Name = "IDs")] string IDs)
+        {
+            var response = KnjigaAccess.DohvatiKnijgePoIDKnjigaCSV(Db, IDs);
+            
+            var json = JsonConvert.SerializeObject(response);
+            return json;
+        }
 
     }
 }

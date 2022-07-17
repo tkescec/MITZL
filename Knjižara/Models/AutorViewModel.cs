@@ -1,9 +1,10 @@
-﻿using PRAPristupBazi.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using PRAPristupBazi.Models;
 
 namespace Knjižara.Models
 {
-    public class AutorViewModel
+    public class AutorViewModel 
     {
-       public Autor autor = new Autor();
+        public Autor autor = new Autor();
     }
 }
