@@ -1,0 +1,142 @@
+﻿@model IEnumerable<PRAPristupBazi.Models.Korisnik>
+@{
+    ViewBag.Title = "Korisnici";
+}
+
+<!-- BEGIN page-header -->
+<h1 class="page-header mb-3">Korisnici</h1>
+<!-- END page-header -->
+
+<div class="row">
+    <!-- BEGIN col-6 -->
+    <div class="col-12">
+        <partial name="Partials/_Alert" />
+
+        <!-- BEGIN panel -->
+        <div class="panel panel-inverse" data-sortable-id="users">
+            <!-- BEGIN panel-heading -->
+            <div class="panel-heading">
+                <h4 class="panel-title">Svi korisnici</h4>
+                <div class="panel-heading-btn">
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-danger" data-toggle="panel-remove"><i class="fa fa-times"></i></a>
+                </div>
+            </div>
+            <!-- END panel-heading -->
+            <!-- BEGIN panel-body -->
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table id="UsersDataTable" class="table table-striped table-bordered align-middle">
+                        <thead>
+                            <tr>
+                                <th width="1%"></th>
+                                <th class="text-nowrap">Ime</th>
+                                <th class="text-nowrap">Prezime</th>
+                                <th width="1%" align="center" class="text-nowrap">Datum registracije</th>
+                                <th width="1%" align="center" class="text-nowrap">Aktiviran</th>
+                                <th width="1%" align="center" class="text-nowrap">Ukupna zakasnina(kn)</th>
+                                <th width="120" class="text-nowrap" data-orderable="false" style="min-width:120px"></th>
+                            </tr>
+                        </thead>
+                        @if (Model.Any())
+                        {
+                            <tbody>
+                                @foreach (var korisnik in Model)
+                                {
+                                    double ukupnaZakasnina = 0;
+
+                                    <tr>
+                                        <td>@korisnik.Idkorisnik</td>
+                                        <td>@korisnik.Osoba.Ime</td>
+                                        <td>@korisnik.Osoba.Prezime</td>
+                                        <td>@korisnik.DatumRegistracije</td>
+                                        <td align="center">
+                                            @if(korisnik.Aktiviran != null && (bool)korisnik.Aktiviran)
+                                            {
+                                                <i class="fas fa-lock-open link-success"></i>
+                                            }
+                                            else
+                                            {
+                                                <i class="fas fa-lock link-danger"></i>
+                                            }
+                                        </td>
+
+                                        <td align="center">
+                                            @foreach (var posudba in korisnik.Posudbas)
+                                            {
+                                                if (posudba.DatumVracanja != null)
+                                                {
+                                                    if (posudba.DatumVracanja > posudba.PeriodPosudbe)
+                                                    {
+                                                        ukupnaZakasnina += (double)(Convert.ToDateTime(posudba.DatumVracanja).Date - Convert.ToDateTime(posudba.PeriodPosudbe).Date).TotalDays * (double)posudba.ZakasninaPoDanu.Zakasnina;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    if (posudba.PeriodPosudbe < DateTime.Now)
+                                                    {
+                                                        ukupnaZakasnina += (double)(DateTime.Now.Date - Convert.ToDateTime(posudba.PeriodPosudbe).Date).TotalDays * (double)posudba.ZakasninaPoDanu.Zakasnina;    
+                                                    }
+                                                }                                                
+                                            }
+
+                                            @string.Format("{0:N2}", ukupnaZakasnina)
+                                        </td>
+                                        <td align="center">
+                                            <a asp-area="Admin" asp-controller="Users" asp-action="Edit" asp-route-id="@korisnik.Idkorisnik" class="btn btn-primary btn-xs">Više</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        }
+                    </table>
+                </div>
+            </div>
+            <!-- END panel-body -->
+        </div>
+        <!-- END panel -->
+    </div>
+    <!-- END col-6 -->
+</div>
+<!-- END row -->
+@section Styles {
+    <link href="~/lib/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/lib/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css" rel="stylesheet" asp-append-version="true" />
+}
+
+    @section Scripts {
+    <script src="~/lib/moment/min/moment-with-locales.min.js" asp-append-version="true"></script>
+    <script src="~/lib/datatables.net/js/jquery.dataTables.min.js" asp-append-version="true"></script>
+    <script src="~/lib/datatables.net-bs5/js/dataTables.bootstrap5.min.js" asp-append-version="true"></script>
+    <script src="~/lib/datatables.net-responsive/js/dataTables.responsive.min.js" asp-append-version="true"></script>
+    <script src="~/lib/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js" asp-append-version="true"></script>
+
+    <script>
+
+        $(document).ready(function() {
+
+            //$.books.delete({
+            //    delete_btn: ".delete-book",
+            //});
+
+            $('#UsersDataTable').DataTable({
+                responsive: false
+            });
+        });
+
+    </script>
+
+    @*@if (ViewBag.Success)
+    {
+        <script>
+            $.gritter.add({
+                title: 'Brisanje knjige',
+                text: '@ViewBag.Message',
+                sticky: false,
+                time: 5000,
+            });
+        </script>
+    }*@
+}

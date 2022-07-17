@@ -1,23 +1,22 @@
-﻿@model IEnumerable<PRAPristupBazi.Models.Posudba>
+﻿@model UserViewModel
 @{
-    ViewBag.Title = "Posudbe";
+    ViewBag.Title = @Model.ToString();
 }
 
 <!-- BEGIN page-header -->
-<h1 class="page-header mb-3">Posudbe</h1>
+<h1 class="page-header mb-3">@Model.ToString()</h1>
 <!-- END page-header -->
-<!-- BEGIN row -->
+
 <div class="row">
     <!-- BEGIN col-6 -->
     <div class="col-12">
-
         <partial name="Partials/_Alert" />
 
         <!-- BEGIN panel -->
-        <div class="panel panel-inverse" data-sortable-id="books">
+        <div class="panel panel-inverse" data-sortable-id="users">
             <!-- BEGIN panel-heading -->
             <div class="panel-heading">
-                <h4 class="panel-title">Sve posudbe</h4>
+                <h4 class="panel-title">Posudbe</h4>
                 <div class="panel-heading-btn">
                     <a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
                     <a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
@@ -34,25 +33,23 @@
                             <tr>
                                 <th width="1%"></th>
                                 <th class="text-nowrap">Naslov knjige</th>
-                                <th class="text-nowrap">Korisnik</th>
+                                <th class="text-nowrap">Autor</th>
                                 <th width="1%" align="center" class="text-nowrap" style="min-width:120px">Datum posudbe</th>
-                                <th width="1%" align="center" class="text-nowrap" style="min-width:120px">Period posudbe</th>
                                 <th width="1%" align="center" class="text-nowrap" style="min-width:120px">Datum vraćanja</th>
                                 <th width="1%" align="center" class="text-nowrap">Zakasnina (kn)</th>
                                 <th width="1%" class="text-nowrap" data-orderable="false" style="min-width:60px"></th>
                             </tr>
                         </thead>
-                        @if (Model.Any())
+                        @if (Model.Posudbe.Any())
                         {
                             <tbody>
-                                @foreach (var posudba in Model)
+                                @foreach (var posudba in Model.Posudbe)
                                 {
                                     <tr>
                                         <td>@posudba.Idposudba</td>
                                         <td>@posudba.Knjiga.Naslov</td>
-                                        <td>@posudba.Korisnik.Osoba.ToString()</td>
+                                        <td>@posudba.Knjiga.Autor.ToString()</td>
                                         <td align="center">@posudba.DatumPosudbe</td>
-                                        <td align="center">@posudba.PeriodPosudbe</td>
                                         <td align="center">@posudba.DatumVracanja</td>
                                         <td align="center">
                                             @(
@@ -110,7 +107,7 @@
 
             $.books.return({
                 return_btn: ".return-book",
-                returnUrl: "/Admin/Books/Borrowed"
+                returnUrl: "/Admin/Users/Edit/" + @Model.Idkorisnik
             });
 
             $('#BooksDataTable').DataTable({
@@ -124,7 +121,7 @@
     {
         <script>
             $.gritter.add({
-                title: 'Vaćanje knjige',
+                title: 'Vraćanje knjige',
                 text: '@ViewBag.Message',
                 sticky: false,
                 time: 5000,
