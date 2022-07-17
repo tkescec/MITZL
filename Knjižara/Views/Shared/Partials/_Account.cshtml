@@ -1,0 +1,18 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accessor
+
+@if (!string.IsNullOrEmpty(@Accessor.HttpContext.Session.GetString("_UserName")))
+{
+    <a href="/korisnik">
+        <img src="~/front/img/user/user-1.jpg" class="user-img" alt="" />
+        <span class="d-none d-xl-inline">@Accessor.HttpContext.Session.GetString("_UserName")</span>
+    </a>
+}
+else
+{
+    <div class="account">
+        <a asp-controller="Account" asp-action="Login">Login</a>
+        /
+        <a asp-controller="Account" asp-action="Register">Register</a>
+    </div>
+}

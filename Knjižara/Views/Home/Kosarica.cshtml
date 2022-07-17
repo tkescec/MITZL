@@ -1,0 +1,122 @@
+﻿@model KosaricaViewModel;
+@{
+    ViewBag.Title = "Kosarica";
+}
+
+<style>
+.boxWrapper{
+    width:100%;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    place-items: center;
+    padding:2rem 0rem;
+    gap:1.5rem;
+}
+@@media screen and (max-width:900px){
+    .boxWrapper{
+    grid-template-columns:1fr;
+    }
+}
+.h4{
+    color:black;
+    background-color:lightblue;
+}
+.box{
+    margin:1rem 0rem;
+    max-width:90%;
+    min-width:400px;
+    border-style:solid;
+    text-align:center;
+    border-width:1px;
+    height:100%;
+}
+#checkBox{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    gap:1rem;
+}
+button{
+    margin:0 auto;
+}
+.ButtonWrapper{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    width:100%;
+    padding:3rem 0rem;
+}
+</style>
+
+
+<div class="boxWrapper">
+    <div class="box" id="posudene">
+        <h4 class="h4">Knjige za posudbu</h4>
+       
+    </div> 
+    <div class="box" id="kupljene">
+        <h4 class="h4">Knjige za kupnju</h4>
+    </div>
+</div>
+<div id="checkBox">
+    <input type="checkbox"/>
+    Potvrđujem uvjete korištenja
+</div>
+<div class="ButtonWrapper">
+
+    <button id="naplati" type="button" class="btn btn-primary">
+    Potvrdi 
+    </button>
+</div>
+
+<script>
+function getCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
+}
+const kupljeneBox = document.getElementById("kupljene")
+const posudeneBox = document.getElementById("posudene")
+const books = JSON.parse(getCookie("kosarica"));
+const keys = Object.keys(books);
+const kupnja = [];
+const posudba = [];
+keys.map(key=>{
+const [book, naslov] = books[key].split("|");
+if(book==="kupi"){
+    kupnja.push(key);
+}else {
+    posudba.push(key);
+}
+(book==="kupi"?kupljeneBox:posudeneBox).innerHTML+=`<div>${naslov}</div>`;
+})
+
+function deleteCookie(name) {
+  document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+}
+
+document.getElementById("naplati").addEventListener("click",(e)=>{
+      $.ajax({
+            type: "POST",
+            url: "/naplati",
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify({"kupnja":kupnja, "posudba":posudba}),
+            success: function() {
+              deleteCookie("kosarica")
+              alert("Uspješna kupnja")
+              window.location.replace('/');
+            }
+        });
+   
+})
+
+</script>
+
+

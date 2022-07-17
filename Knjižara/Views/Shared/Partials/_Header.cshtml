@@ -1,0 +1,120 @@
+﻿<style>
+.switch-wrapper{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:0.5rem 0rem;
+    gap:0.5rem;
+}
+</style>
+
+<div id="header" class="header">
+    <!-- BEGIN container -->
+    <div class="container">
+        <!-- BEGIN header-container -->
+        <div class="header-container">
+            <!-- BEGIN navbar-toggle -->
+            <button type="button" class="navbar-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!-- END navbar-toggle -->
+            <!-- BEGIN header-logo -->
+            <div class="header-logo">
+                <a href="/">
+                    <span class="brand-logo"></span>
+                    <span class="brand-text">
+                        <span>Super</span>Knjižara
+                        <small>internet trgovina knjiga</small>
+                    </span>
+                </a>
+            </div>
+
+            <!-- END header-logo -->
+            <!-- BEGIN header-nav -->
+            <div class="header-nav">
+
+                <div class="collapse navbar-collapse" id="navbar-collapse">
+                    <ul class="nav justify-content-center">
+
+                        <li class="active"><a href="/">Home</a></li>
+
+
+
+                        <li class="dropdown dropdown-hover">
+                            <a href="#" data-bs-toggle="dropdown">
+                                <i class="fa fa-search search-btn"></i>
+                                <span class="arrow top"></span>
+                            </a>
+
+                            <div class="dropdown-menu p-15px">
+                                <div class="switch-wrapper">
+                                    Pretraži po autoru
+                                    <input id="switch" type="checkbox" class="switch"
+                                           data-on-text="normal"
+                                           data-off-text="abnormal"
+                                           data-size="large" />
+                                </div>
+                                <form id="search-form" name="search_form">
+                                    <div class="input-group">
+                                        <input id="search-input" type="text" placeholder="Search" class="form-control bg-light" />
+                                        <button class="btn btn-dark" type="submit"><i class="fa fa-search"></i></button>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- END header-nav -->
+            <!-- BEGIN header-nav -->
+            <div class="header-nav">
+                <ul class="nav justify-content-end">
+                    <li class="dropdown dropdown-hover">
+                        <a href="/kosarica">
+                            <i class="fa fa-shopping-bag"></i>
+                            <span style="visibility:hidden;" id="total" class="total"></span>
+                            <span class="arrow top"></span>
+                        </a>
+
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <partial name="Partials/_Account" />
+                    </li>
+                </ul>
+            </div>
+            <!-- END header-nav -->
+        </div>
+        <!-- END header-container -->
+    </div>
+    <!-- END container -->
+</div>
+
+
+<script defer>
+        function getCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0;i < ca.length;i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1,c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        }
+        return null;
+    }
+    if(getCookie("kosarica")){
+        document.getElementById("total").style.visibility="visible";
+    };
+        function onSearchFormSubmit(e){
+           e.preventDefault();
+           const autor = document.getElementById('switch').checked;
+           alert(autor);
+           const autorQuery = autor?"&searchBy='Autor'":"";
+           let searchInput = document.getElementById("search-input").value;
+           window.location.replace("/books?search="+searchInput+autorQuery);
+        }
+
+        document.getElementById("search-form").addEventListener("submit", onSearchFormSubmit );
+</script>

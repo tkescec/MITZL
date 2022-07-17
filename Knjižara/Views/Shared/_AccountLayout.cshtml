@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Head partial - Contains base level CSS and SEO meta tags -->
+    <partial name="Partials/_AccountHead" />
+    <!-- Page Specific CSS -->
+    @await RenderSectionAsync("Styles", required: false)
+
+</head>
+<body>
+    <!-- BEGIN #loader -->
+    <partial name="Partials/_Loader" />
+    <!-- END #loader -->
+
+    <!-- BEGIN #app -->
+    <div id="app" class="app">
+        @RenderBody()
+    </div>
+    <!-- END #app -->
+
+    <!-- ================== BEGIN core-js ================== -->
+    <script src="~/admin/js/vendor.min.js" asp-append-version="true"></script>
+    <script src="~/admin/js/app.min.js" asp-append-version="true"></script>
+    <!-- ================== END core-js ================== -->
+
+    <!-- ================== BEGIN page-js ================== -->  
+    <script src="~/lib/gritter/js/jquery.gritter.min.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+    <!-- ================== BEGIN page-js ================== -->
+
+</body>
+</html>

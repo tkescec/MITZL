@@ -6,4 +6,37 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="wwwroot\admin\lib\**" />
+    <Compile Remove="wwwroot\front\lib\**" />
+    <Content Remove="wwwroot\admin\lib\**" />
+    <Content Remove="wwwroot\front\lib\**" />
+    <EmbeddedResource Remove="wwwroot\admin\lib\**" />
+    <EmbeddedResource Remove="wwwroot\front\lib\**" />
+    <None Remove="wwwroot\admin\lib\**" />
+    <None Remove="wwwroot\front\lib\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Controllers\BaseController.cs~RF1c9d060.TMP" />
+    <None Remove="Views\_ViewStart.cshtml~RF15a6ca1.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PRAPristupBazi\PRAPristupBazi.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Controllers\Api\" />
+    <Folder Include="wwwroot\admin\js\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MailKit" Version="3.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Runtime" Version="2.2.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.5" />
+  </ItemGroup>
+
 </Project>

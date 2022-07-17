@@ -1,8 +1,133 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿
+@{
+    ViewBag.Title = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<style>
+    .button-wrapper{
+        width:100%;
+        display:flex;
+        justify-content:flex-end;
+        max-width:1400px;
+        margin:0 auto;
+        padding:2rem 2rem;
+    }
+.carousel-inner{
+    max-height:300px;
+    height:300px;
+}
+.carousel-item{
+    height:300px;
+    width:100%;
+    position:relative;
+}
+.img{
+        object-fit:cover;
+        height:100%;
+        width:100%;
+        position:absolute;
+        top:0;
+        left:0;
+    }
+
+     .imgSection {
+        width: 100%;
+        height: 300px;
+    }
+
+    .MainImage {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        box-shadow: 0px 0px 2px black;
+        border-radius: 0.4rem;
+    }
+
+    .Description {
+        justify-content: flex-start;
+    }
+
+    section {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .ItemWrapper {
+        max-width: 1400px;
+        padding: 3rem 0rem;
+        margin: 0 auto;
+        width: 100%;
+        display: grid;
+        gap: 1rem;
+        place-items: center;
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .buttonsWrapper {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .prep {
+        cursor: pointer;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    @@media screen and (max-width: 900px) {
+        .ItemWrapper {
+            grid-template-columns: 1fr;
+        }
+
+        section {
+            align-items: center;
+        }
+    }
+</style>
+
+<div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active" data-bs-interval="10000">
+      <img src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/index-11-1652097424.jpg?crop=1.00xw:1.00xh;0,0&resize=980:*" class="d-block w-100 img" alt="...">
+      
+    </div>
+    <div class="carousel-item" data-bs-interval="2000">
+      <img src="https://taskandpurpose.com/uploads/2020/11/befunky-collage.jpg" class="d-block w-100 img" alt="...">
+      
+    </div>
+    <div class="carousel-item">
+      <img src="https://thedailyaztec.com/wp-content/uploads/2022/02/romance-books.jpg" class="d-block w-100 img" alt="...">
+      
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+<div class="button-wrapper">
+    <button onclick="window.location.href='/books'" type="button" class="btn btn-primary">Prikaži sve</button>
+</div>
+
+<div class="ItemWrapper">
+    <section class="imgSection prep">
+        <img id="@Model.preporuceneKnjige[0].Idknjiga" src="@Model.preporuceneKnjige[0].Slika" class="MainImage" />
+    </section>
+    <section class="imgSection prep">
+        <img id="@Model.preporuceneKnjige[1].Idknjiga" src="@Model.preporuceneKnjige[1].Slika" class="MainImage" />
+    </section>
+    <section class="imgSection prep">
+        <img id="@Model.preporuceneKnjige[2].Idknjiga" src="@Model.preporuceneKnjige[2].Slika" class="MainImage" />
+    </section>
 </div>
