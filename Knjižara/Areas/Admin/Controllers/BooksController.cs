@@ -252,7 +252,7 @@ namespace Knjižara.Areas.Admin.Controllers
 
                     TempData["Success"] = true;
                     TempData["Message"] = "Knjiga je uspješno vraćena!";
-                    jsonData = new { success = true, returnUrl = "/Admin/Books/Borrowed" };
+                    jsonData = new { success = true };
                 }
                 else
                 {

@@ -213,7 +213,8 @@
                     loading_class: "panel-loading",
                     body_class: "panel-body",
                     loader_class: "panel-loader",
-                    loader_html: '<span class="spinner spinner- sm"></span>'
+                    loader_html: '<span class="spinner spinner- sm"></span>',
+                    returnUrl: ""
                 }, options);
 
                 $(settings.return_btn).off("click");
@@ -255,7 +256,7 @@
                                     },
                                     success: function (response) {
                                         if (response.success) {
-                                            window.location.assign(response.returnUrl);
+                                            window.location.assign(settings.returnUrl);
                                         }
                                     },
                                     error: function (xhr) {
