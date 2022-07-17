@@ -110,7 +110,6 @@
         function onSearchFormSubmit(e){
            e.preventDefault();
            const autor = document.getElementById('switch').checked;
-           alert(autor);
            const autorQuery = autor?"&searchBy='Autor'":"";
            let searchInput = document.getElementById("search-input").value;
            window.location.replace("/books?search="+searchInput+autorQuery);
